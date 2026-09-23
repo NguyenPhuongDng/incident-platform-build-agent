@@ -13,3 +13,45 @@ intake_fields:
   - {key: khung_gio, label: "Khung giờ thuận tiện để xử lý", required: false}
 priority_rules: "Rò nước lớn, chập điện, kẹt thang máy, cháy nổ, mất an ninh: KHẨN CẤP. Hỏng hóc thông thường: BÌNH THƯỜNG. Thắc mắc, hỏi thông tin: THẤP."
 max_room_turns: 8
+
+# Các hàng đợi duyệt của domain này. Lõi không biết "cư dân" hay "BQL" là gì — nó chỉ
+# định tuyến hành động chờ duyệt tới đúng id vai trò mà tool khai trong catalog.yaml.
+approval_roles:
+  - id: cu_dan
+    label: "Cư dân duyệt"
+    mo_ta: "Người gửi phản ánh chốt phương án và nghiệm thu"
+    hien_o: resident          # hiện trong khung chat của người báo
+  - id: bql
+    label: "BQL duyệt"
+    mo_ta: "Ban quản lý duyệt điều đơn vị, chi phí, miễn giảm"
+    hien_o: console
+  - id: don_vi
+    label: "Đơn vị thực hiện duyệt"
+    mo_ta: "Kỹ thuật, an ninh, vệ sinh hoặc nhà thầu ngoài xác nhận tiếp nhận và báo hoàn thành"
+    hien_o: console
+
+# Quy trình xác nhận của phản ánh có thi công. Mỗi bước khớp bằng DANH SÁCH TOOL nên
+# thêm một bên mới chỉ là thêm tool vào đúng bước. Bước chỉ được tính là xong khi có
+# một hành động `da_thuc_hien` của một trong các tool đó trên cùng phản ánh.
+# Phòng họp không được đóng khi quy trình đã bắt đầu mà chưa đi hết (xem room guard).
+quy_trinh_xac_nhan:
+  - id: chot_phuong_an
+    label: "Cư dân chốt phương án"
+    vai_tro: cu_dan
+    tools: [chot_phuong_an_voi_cu_dan]
+  - id: dieu_don_vi
+    label: "BQL duyệt điều đơn vị xử lý"
+    vai_tro: bql
+    tools: [dieu_ktv_khan_cap, dieu_to_an_ninh, dieu_to_ve_sinh]
+  - id: don_vi_tiep_nhan
+    label: "Đơn vị xác nhận tiếp nhận"
+    vai_tro: don_vi
+    tools: [ktv_xac_nhan_tiep_nhan, an_ninh_xac_nhan_tiep_nhan, ve_sinh_xac_nhan_tiep_nhan]
+  - id: don_vi_hoan_thanh
+    label: "Đơn vị báo đã xử lý xong"
+    vai_tro: don_vi
+    tools: [ktv_bao_hoan_thanh, an_ninh_bao_hoan_thanh, ve_sinh_bao_hoan_thanh]
+  - id: cu_dan_nghiem_thu
+    label: "Cư dân nghiệm thu, đóng phản ánh"
+    vai_tro: cu_dan
+    tools: [cu_dan_xac_nhan_hoan_thanh]

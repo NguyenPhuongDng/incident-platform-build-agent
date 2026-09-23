@@ -542,3 +542,84 @@ hàng nằm đúng chỗ của nó, trong domain pack.
 kèm `nguon: faq_chung.md`. Thêm 38 phép kiểm ngoại tuyến (stub LLM bằng đúng payload đã gây lỗi)
 cho cả năm nhánh: câu hỏi rỗng, không hỏi lại thứ đã biết, guard không đụng vào câu hỏi hợp lệ,
 cộng dồn trường khi model quên, và trần số lượt.
+
+## Duyệt nhiều bên: "ai duyệt" là thuộc tính của tool, không phải luật trong code
+
+Bản HITL đầu tiên chỉ có MỘT người duyệt — quản lý — nên `requires_approval: true` là đủ. Quy
+trình thật thì không phải vậy: cư dân chốt phương án, BQL duyệt điều đơn vị, đơn vị xác nhận tiếp
+nhận, đơn vị báo xong, cư dân nghiệm thu, rồi mới đóng phòng. Năm bước, ba bên khác nhau bấm nút.
+
+**Câu hỏi "chỉ cần sửa tool thôi đúng không" — gần đúng, nhưng thiếu một mảnh.** Sửa tool là đủ để
+có *chuỗi hành động*, vì cơ chế chặn-và-chờ đã có sẵn từ bản HITL. Nhưng "ai được bấm duyệt" thì
+không thể nằm trong tool: hàng đợi là của platform, không phải của tool. Nên chỗ cần đổi là
+**một trường khai báo** — `approval_role` trong `catalog.yaml` — cộng với việc `ToolExecutor` đọc
+trường đó và ghi vào `Action.approver_role`. Sau đó mọi thứ còn lại đúng là "chỉ sửa tool": thêm
+một bên duyệt mới không phải sửa một dòng nào trong `backend/core/`.
+
+**Vì sao không hard-code ba vai trò trong lõi:** danh sách vai trò khai ở `approval_roles` trong
+`domain.yaml` kèm nhãn hiển thị và nơi hiện (`console` hay `resident`). Lõi chỉ định tuyến theo id
+chuỗi. Một khách hàng khác có "ban quản trị chung cư", "tổ trưởng dân phố" thì sửa domain pack,
+không sửa code.
+
+**Quy trình cũng là dữ liệu.** `quy_trinh_xac_nhan` khai năm bước, mỗi bước khớp bằng một DANH
+SÁCH tool (`dieu_ktv_khan_cap` / `dieu_to_an_ninh` / `dieu_to_ve_sinh` cùng là bước "BQL duyệt
+điều đơn vị"). Thêm nhà thầu thang máy = thêm tool của họ vào đúng bước. `backend/core/workflow.py`
+tính trạng thái bằng một luật duy nhất: *bước xong khi có một hành động `da_thuc_hien` của một
+trong các tool thuộc bước đó trên cùng phản ánh*.
+
+**Chặn đóng phòng, nhưng chỉ khi quy trình đã bắt đầu.** Guard `quy_trinh_xac_nhan_chua_xong` nhắc
+Điều phối một lần kèm tên bước còn thiếu rồi mới cho kết thúc — không lặp vô hạn, vì một phòng họp
+không thể tự làm thay việc của người duyệt. Điều kiện "đã bắt đầu" là bắt buộc: nếu không, mọi
+phản ánh chỉ hỏi thông tin (thắc mắc phí, hỏi nội quy) sẽ không bao giờ đóng được.
+
+**Ba MCP server thay vì một.** `an_ninh` (:8102) và `ve_sinh` (:8103) dựng cùng khuôn với
+`ky_thuat` (:8101) — mỗi bên một tiến trình, một kho bản ghi riêng, và **không bên nào biết gì về
+việc duyệt**: chúng chỉ thực thi khi được gọi. Đó là điểm cần chứng minh — chốt chặn nằm ở tầng
+platform, không phụ thuộc thiện chí của hệ thống bên thứ ba.
+
+**Một lỗi do chính bộ test này lộ ra:** `cu_dan_xac_nhan_hoan_thanh` đặt phản ánh sang `hoan_tat`,
+nhưng `_wait_for_manager` sau khi duyệt xong lại đặt vé về `dang_xu_ly` — nghiệm thu xong vé vẫn
+"đang xử lý". Sửa bằng `only_if="cho_duyet"`: lúc họp tiếp chỉ khôi phục trạng thái nếu vé vẫn
+đang ở đúng trạng thái mà lúc dừng đã đặt, không ghi đè thứ tool vừa đặt.
+
+**Kiểm chứng (không cần LLM):** chạy đủ năm bước qua `ToolExecutor` thật với ba MCP server thật —
+mỗi bước dừng đúng hàng đợi (`cu_dan`/`bql`/`don_vi`), duyệt xong tool chạy thật (mã `DKC-`,
+`KTX-`…), bước sau mới mở ra; một lần từ chối ở bước 4 để chắc bước không bị tính là xong; hết
+bước 5 thì vé sang `hoan_tat` và guard hết chặn; vé chỉ hỏi thông tin không bị chặn. Giao diện
+kiểm bằng Chrome headless: dải 5 bước, hai hàng đợi tách đúng vai trò, badge riêng từng hàng đợi,
+thẻ "Đồng ý / Chưa đồng ý" hiện trong khung chat cư dân, cột duyệt của tool catalog hiện tên vai trò.
+
+## Vòng lặp "hỏi lại người báo": sửa ở chỗ mất trí nhớ, không sửa bằng cách đoán câu hỏi giống nhau
+
+Vé thật TK-3656061B (2026-09-23) chạy ba vòng liền y như nhau: phòng họp mở → Kỹ thuật phát biểu
+**đúng một lượt** → hỏi người báo một câu → phòng đóng (`so_luot: 1`) → Lễ tân đi hỏi → người báo
+trả lời → phòng mở lại → hỏi tiếp. Người báo trả lời ba lần, vé vẫn đứng ở `cho_cu_dan`.
+
+Đọc dữ liệu vé thì thấy hai nguyên nhân tách bạch:
+
+1. **Câu trả lời không gắn với câu hỏi.** `add_followup` cất câu trả lời vào `thong_tin_bo_sung`
+   dưới dạng danh sách văn bản rời. Lượt sau agent nhìn vào TICKET thấy `["máy tự mua, không,
+   không"]` mà không biết đó là trả lời cho câu nào — nên nó hỏi tiếp cho chắc.
+2. **Không có gì đếm số vòng.** Một vé bật qua lại `cho_cu_dan` bao nhiêu lần cũng được.
+
+**Sửa (1) bằng cách ghép cặp:** phòng họp ghim câu hỏi lên ticket lúc đóng (`cau_hoi_dang_cho`),
+`add_followup` ghép nó với câu trả lời thành `hoi_dap: [{hoi, dap}]`, và `format_ticket` in riêng
+thành khối "ĐÃ HỎI NGƯỜI BÁO VÀ ĐÃ CÓ CÂU TRẢ LỜI (TUYỆT ĐỐI KHÔNG hỏi lại những ý này)". Agent
+đọc thẳng câu trả lời trong ngữ cảnh của chính câu hỏi nó từng đặt.
+
+**Sửa (2) bằng trần cứng:** `MAX_FOLLOWUP_ROUNDS` (mặc định 2). Quá trần thì guard
+`khong_hoi_lai_nguoi_bao` **xóa** `can_hoi_them_nguoi_bao` khỏi output của agent — không chỉ cảnh
+báo, vì để nguyên thì Lễ tân vẫn đem câu hỏi đó đi hỏi. Phòng họp buộc phải kết luận với thông tin
+đang có; thiếu gì thì nêu giả định, đó vẫn tốt hơn bắt người báo trả lời vòng thứ tư.
+
+**Đã thử và BỎ: so khớp "câu hỏi trùng ý" bằng từ khóa.** Ý tưởng là chặn ngay khi agent hỏi lại
+cùng một ý dù diễn đạt khác. Đo trên đúng ba câu hỏi của vé lỗi (bỏ dấu, bỏ hư từ, so tập từ):
+cặp **trùng ý** đạt overlap 0.50, trong khi một cặp **khác ý** lại đạt 0.75. Không có ngưỡng nào
+tách được hai nhóm — hạ ngưỡng để bắt cặp trùng ý thì chặn nhầm câu hỏi chính đáng. Giữ lại đúng
+phần chắc chắn: `is_repeat()` ngưỡng 0.8, chỉ bắt câu lặp gần như NGUYÊN VĂN. Phần "trùng ý" giao
+cho hai cơ chế không phải đoán: trần số vòng, và việc bơm thẳng câu trả lời vào TICKET.
+
+**Kiểm chứng (không LLM):** ghim → ghép cặp → hàng chờ được xóa; hỏi lặp gần y hệt bị chặn kèm
+nguyên văn câu trả lời cũ; câu hỏi khác ý KHÔNG bị chặn nhầm; hết vòng 2 thì mọi câu hỏi bị chặn;
+khối ĐÃ HỎI hiện đúng trong prompt và không in thô khóa nội bộ; người báo tự nhắn thêm lúc không
+có câu hỏi nào đang chờ vẫn được lưu, ghi rõ là tự bổ sung; vé khác không bị ảnh hưởng.

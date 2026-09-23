@@ -48,6 +48,10 @@ class Settings:
         # MCP
         self.mcp_ky_thuat_url: str = os.getenv("MCP_KY_THUAT_URL", "http://127.0.0.1:8101/mcp")
         self.mcp_port: int = int(os.getenv("MCP_PORT", "8101"))
+        self.mcp_an_ninh_url: str = os.getenv("MCP_AN_NINH_URL", "http://127.0.0.1:8102/mcp")
+        self.mcp_an_ninh_port: int = int(os.getenv("MCP_AN_NINH_PORT", "8102"))
+        self.mcp_ve_sinh_url: str = os.getenv("MCP_VE_SINH_URL", "http://127.0.0.1:8103/mcp")
+        self.mcp_ve_sinh_port: int = int(os.getenv("MCP_VE_SINH_PORT", "8103"))
 
         # RAG
         self.chunk_size: int = int(os.getenv("CHUNK_SIZE", "800"))
@@ -72,6 +76,10 @@ class Settings:
         # Số lượt nhắn của người báo trước khi Lễ tân buộc phải mở phản ánh với thông
         # tin đã có, thay vì hỏi tiếp. Model nhỏ có thể hỏi vòng vo vô hạn.
         self.intake_max_turns: int = int(os.getenv("INTAKE_MAX_TURNS", "3"))
+        # Số lần TỐI ĐA phòng họp được quay lại hỏi người báo trên cùng một phản ánh.
+        # Quá trần thì guard chặn, agent phải kết luận với thông tin đang có — chặn
+        # vòng "hỏi -> trả lời -> hỏi lại y hệt" đã đo được trên vé thật.
+        self.max_followup_rounds: int = int(os.getenv("MAX_FOLLOWUP_ROUNDS", "2"))
 
         # Builder / Evaluator (Phase 8-9)
         self.builder_overlap_threshold: float = float(os.getenv("BUILDER_OVERLAP_THRESHOLD", "0.85"))

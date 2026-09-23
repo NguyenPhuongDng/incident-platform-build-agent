@@ -27,8 +27,8 @@ flowchart TB
     EX["🚦 ToolExecutor<br/>chặn duyệt · tiêm context"]
     KB[("📚 Chroma<br/>knowledge")]
   end
-  MCP["🔌 MCP server ky_thuat<br/>streamable HTTP :8101"]
-  MGR{{"👤 Quản lý duyệt"}}
+  MCP["🔌 MCP server của các bên<br/>ky_thuat :8101 · an_ninh :8102 · ve_sinh :8103"]
+  MGR{{"👤 Ba hàng đợi duyệt<br/>cư dân · BQL · đơn vị thực hiện"}}
 
   U <-->|phản ánh · hỏi đáp| LT
   LT -->|ticket| DP
@@ -130,10 +130,10 @@ Lần đầu, ở cửa sổ khác:
 |---|---|---|
 | 0:00 | **Tab 4 — Tool catalog** | 15 tool, cột *Phạm vi* và *Cần duyệt*. `tra_lich_ktv` đến từ `mcp:ky_thuat` — hệ thống của nhóm khác cắm vào qua MCP. Hai tool vệ sinh chưa agent nào dùng. |
 | 0:30 | **Tab 1 — Cư dân**: gửi *"Trần nhà tắm nhà tôi nước nhỏ giọt liên tục từ sáng"* | Lễ tân hỏi thêm vị trí, rồi tạo ticket và báo ưu tiên. |
-| 1:00 | **Tab 2 — Phòng họp** | Timeline chạy thời gian thực: Điều phối chọn Kỹ thuật **kèm lý do**, RAG trỏ `quy_trinh_sua_chua.md`, tool call hiện `ma_can_ho` **do hệ thống tiêm**, agent đang nói được tô sáng ở cột phải. |
+| 1:00 | **Tab 2 — Phòng họp** | Chọn phản ánh ở cột trái → đầu phòng cho biết ngay: vụ gì, căn hộ nào, trạng thái, số lượt đã dùng và **việc tiếp theo**. Tab **Trao đổi** chạy thời gian thực: Điều phối chọn Kỹ thuật **kèm lý do**, tool call hiện `ma_can_ho` **do hệ thống tiêm**. Tab **Nhật ký** giữ nguyên mọi sự kiện thô kèm payload; **Thành viên** tô sáng ai đang phát biểu. |
 | 1:45 | Nếu là ca sửa chữa do cư dân chịu phí | Phòng họp chạy 4 lượt: Kỹ thuật phân loại bên chịu chi phí → Kế toán lập **báo giá dự kiến** (`BG-DK-…`) → Kỹ thuật xác nhận vật tư và giờ công → Kế toán **chốt giá cuối** (`BG-CT-…`). Tool tự cộng tiền, model không bịa số. |
-| 2:00 | **Tab 5 — Chờ duyệt** (hoặc băng-rôn vàng ngay trên timeline) | `dieu_ktv_khan_cap` nằm chờ, **chưa chạy** — và **cả phòng họp đang đứng im**: timeline dừng ở `room_waiting`, không có lượt nào chạy thêm. Bấm **Duyệt và họp tiếp** → tool thực thi, kết quả thật quay vào đúng lượt đang dở, phòng họp chạy nốt rồi Lễ tân mới trả lời cư dân. Bấm **Từ chối** thì agent phải nêu phương án khác. |
-| 2:30 | **Tab 3 — Agent Builder**: tạo *"Vệ sinh môi trường"* | Điền mô tả năng lực, chọn 2 tool vệ sinh, upload `quy_dinh_ve_sinh.md`. |
+| 2:00 | **Tab 5 — BQL duyệt** / **Tab 6 — Đơn vị duyệt** (hoặc băng-rôn vàng ngay trên đầu phòng, hoặc tab **Công việc**) | `dieu_ktv_khan_cap` nằm chờ, **chưa chạy** — và **cả phòng họp đang đứng im**: timeline dừng ở `room_waiting`, không có lượt nào chạy thêm. Bấm **Duyệt và họp tiếp** → tool thực thi, kết quả thật quay vào đúng lượt đang dở, phòng họp chạy nốt rồi Lễ tân mới trả lời cư dân. Bấm **Từ chối** thì agent phải nêu phương án khác. |
+| 2:30 | **Tab 3 — Agent Studio**: tạo *"Vệ sinh môi trường"* | Ba giai đoạn hiện rõ trên đầu: mô tả nhu cầu → rà soát cấu hình → chạy thử & bật. Điền mô tả năng lực, chọn 2 tool vệ sinh (khối **Được làm / Cần người duyệt / Không được làm** nói rõ quyền), upload `quy_dinh_ve_sinh.md`. |
 | 3:30 | Bấm **Thử định tuyến** với *"Rác tồn đọng ở hành lang tầng 12"* | Điều phối trả về `ve_sinh` — mô tả năng lực đủ rõ. Bấm **Bật**. |
 | 4:00 | Quay **Tab 1**, gửi đúng phản ánh về rác | Điều phối tự chọn agent vừa tạo. **Không sửa dòng code nào.** |
 | 4:45 | Nhấn mạnh | Agent mới = dữ liệu trong DB. Registry đọc động mỗi lượt. |
@@ -194,6 +194,30 @@ agent gọi tool cần duyệt
   → action_executed + room_resumed              (ticket → dang_xu_ly, họp tiếp)
 ```
 
+**Ai duyệt là thuộc tính của tool, không phải luật trong code.** Mỗi tool khai `approval_role`
+trong `catalog.yaml`; `ToolExecutor` đọc vai trò đó rồi đẩy hành động vào đúng hàng đợi. Các vai
+trò do domain pack khai (`approval_roles` trong `domain.yaml`), nên lõi không biết "cư dân" hay
+"BQL" là gì:
+
+| Vai trò | Ai bấm | Hiện ở đâu | Ví dụ tool |
+|---|---|---|---|
+| `cu_dan` | người gửi phản ánh | ngay trong khung chat tab **Cư dân** | `chot_phuong_an_voi_cu_dan`, `cu_dan_xac_nhan_hoan_thanh` |
+| `bql` | Ban quản lý | tab **BQL duyệt** | `dieu_ktv_khan_cap`, `dieu_to_an_ninh`, `dieu_to_ve_sinh`, `mien_giam_phi` |
+| `don_vi` | kỹ thuật / an ninh / vệ sinh / nhà thầu ngoài | tab **Đơn vị duyệt** (dùng chung) | `ktv_xac_nhan_tiep_nhan`, `an_ninh_bao_hoan_thanh`, `ve_sinh_xac_nhan_tiep_nhan` |
+
+**Quy trình xác nhận 5 bước** khai ở `quy_trinh_xac_nhan` trong `domain.yaml`, mỗi bước khớp bằng
+một danh sách tool nên thêm một bên mới chỉ là thêm tool vào đúng bước:
+
+```
+① cư dân chốt phương án → ② BQL duyệt điều đơn vị → ③ đơn vị xác nhận tiếp nhận
+→ ④ đơn vị báo đã xong → ⑤ cư dân nghiệm thu → mới được đóng phòng
+```
+
+Guard `quy_trinh_xac_nhan_chua_xong` trong cả hai engine chặn Điều phối kết thúc phiên khi quy
+trình **đã bắt đầu** mà chưa đi hết: nó nhắc lại một lần kèm tên bước còn thiếu. Phản ánh chỉ hỏi
+thông tin không bao giờ bước vào quy trình này nên không bị chặn. Trạng thái từng bước xem ở
+`GET /api/tickets/{id}/workflow`, và hiện thành dải 5 ô ngay đầu phòng họp.
+
 Agent nhận lại đúng ba trạng thái, và luật phòng họp trong `platform_prompt.py` nói rõ phải làm gì
 với từng trạng thái:
 
@@ -221,8 +245,9 @@ Chi tiết cần biết khi vận hành:
 | Điều phối chọn agent không có / không active | Nhắc lại **1 lần** kèm danh sách hợp lệ; vẫn sai thì kết thúc |
 | Vượt `max_room_turns` | Buộc kết thúc |
 | Một agent nói quá 3 lần | Loại khỏi danh sách chọn |
-| Agent cần hỏi thêm người báo | Kết thúc ngay, chuyển Lễ tân, ticket → `cho_cu_dan` |
+| Agent cần hỏi thêm người báo | Ghim câu hỏi lên ticket, chạy nốt các bộ phận còn việc, rồi mới chuyển Lễ tân; ticket → `cho_cu_dan` |
 | Chờ duyệt quá `HITL_APPROVAL_TIMEOUT` | Phát `het_han_cho_duyet`, họp tiếp; hành động vẫn ở hàng chờ |
+| Hỏi lại người báo quá `MAX_FOLLOWUP_ROUNDS` vòng, hoặc hỏi lại gần y hệt câu đã được trả lời | Phát `khong_hoi_lai_nguoi_bao`, **bỏ câu hỏi** khỏi kết luận, buộc agent chốt với thông tin đang có |
 
 Mọi guard đều phát sự kiện `guard_triggered` nên nhìn thấy được khi demo.
 
@@ -249,6 +274,33 @@ Hai thứ khiến Lễ tân bớt hỏi ngay từ đầu, không phải guard m�
 
 ---
 
+## 7b. Giao diện
+
+Giao diện lấy **hệ thiết kế từ bản `Resident-Local/`** (`offline/bql-ui.css`, `offline/resident-ui.css`)
+và áp vào đúng dữ liệu thật của demo — không nhúng bundle React của bản đó, không thêm dependency:
+
+| Tệp | Vai trò |
+|---|---|
+| `frontend/index.html` | Khung ứng dụng: sidebar 6 khu vực, topbar cho màn hình hẹp |
+| `frontend/ui.css` | Token và component port từ Resident-Local (không còn Tailwind) |
+| `frontend/app.js` | Toàn bộ logic gọi API, SSE và render (giữ nguyên hợp đồng với backend) |
+| `frontend/assets/` | Font Inter `.woff2` và favicon lấy từ `Resident-Local/offline/` |
+
+Hai vùng, hai bộ token, đúng như bản gốc: **cư dân** dùng accent cam đất với thẻ bo tròn 18px,
+**bảng điều khiển BQL** dùng nền trung tính với accent navy `#284e93`. Hai điều chỉnh về bố cục
+lấy thẳng từ `BQL-UX-RESEARCH.md` của bản đó:
+
+- **Phòng họp = danh sách vụ việc + một vùng làm việc**, thay vì ba cột hẹp. Tóm tắt và “việc tiếp
+  theo” luôn nằm ở đầu phòng; bốn tab **Trao đổi / Công việc / Nhật ký / Thành viên** chia thông tin
+  theo tác vụ, có badge đếm để thứ đang ẩn không bị quên.
+- **Agent Studio ba giai đoạn** thay cho một trang phẳng: mô tả nhu cầu → rà soát cấu hình → chạy
+  thử & bật. Chốt chặn đánh giá hiển thị trạng thái thật (“chưa chạy” là chưa chạy), không tô xanh
+  trước khi có kết quả.
+
+Mọi nội dung hiển thị vẫn đến từ API thật của demo: không có dữ liệu mẫu cứng trong giao diện.
+
+---
+
 ## 8. Các giới hạn đã biết
 
 **Ngoài phạm vi có chủ đích:** không đăng nhập/phân quyền, không multi-tenant, không hybrid
@@ -270,9 +322,13 @@ search/rerank, không deploy production, không tích hợp hệ thống thật.
   code chốt: đủ trường bắt buộc là tạo ticket. Đổi `intake_fields` trong `domain.yaml` để điều chỉnh.
 - **RAG cơ bản:** một collection Chroma, lọc theo `agent_id`, top-k cố định, ngưỡng khoảng cách
   `RAG_MAX_DISTANCE`. Không rerank, không hybrid search.
-- **Chỉ một MCP server mock** (`ky_thuat`). Thêm server khác cần thêm dòng trong
-  `MCP_SERVERS` của `backend/tools/mcp_client.py` và mục tương ứng trong `catalog.yaml`.
-- **Không có bước build frontend:** HTML + JS thuần + Tailwind qua CDN, nên cần mạng để tải CDN.
+- **Ba MCP server mock** (`ky_thuat` :8101, `an_ninh` :8102, `ve_sinh` :8103), mỗi bên một tiến
+  trình riêng đúng như hệ thống của ba đơn vị khác nhau. Thêm bên thứ tư (thang máy, cây xanh,
+  nhà thầu ngoài): thêm một tệp trong `mcp_servers/`, một dòng trong `MCP_SERVERS` của
+  `backend/tools/mcp_client.py`, một dòng trong mảng `MCP_SERVERS` của `run.sh`, và các mục tool
+  kèm `approval_role` trong `catalog.yaml` — không sửa dòng code lõi nào.
+- **Không có bước build frontend:** HTML + CSS + JS thuần, font Inter nhúng cục bộ trong
+  `frontend/assets/` — không tải gì từ CDN nên mở được cả khi máy không ra Internet.
 - **SQLite + event bus trong bộ nhớ:** chỉ hợp một tiến trình. Chạy nhiều worker thì SSE sẽ lệch.
 - **Chốt chờ duyệt cũng nằm trong bộ nhớ.** Restart backend lúc đang chờ thì phòng họp đó mất;
   hành động vẫn ở `cho_duyet` và duyệt sau vẫn chạy, nhưng phiên họp không tiếp tục được. Mỗi

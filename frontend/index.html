@@ -1,205 +1,388 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Demo platform phòng họp agent xử lý phản ánh cho Ban quản lý tòa nhà.">
 <title>Platform phòng họp agent — Demo</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<style>
-  body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
-  .tab-active { border-color:#2563eb; color:#2563eb; background:#eff6ff; }
-  pre { white-space: pre-wrap; word-break: break-word; }
-  .ev { border-left-width:3px; }
-</style>
+<link rel="icon" href="/static/assets/favicon.svg">
+<link rel="preload" href="/static/assets/inter-regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/static/ui.css">
 </head>
-<body class="bg-slate-100 text-slate-800">
+<body>
 
-<header class="bg-white border-b sticky top-0 z-20">
-  <div class="max-w-7xl mx-auto px-4 py-3 flex items-center gap-4 flex-wrap">
-    <h1 class="text-lg font-semibold">Platform phòng họp agent</h1>
-    <span id="domainName" class="text-sm text-slate-500"></span>
-    <span id="engineBadge" class="text-xs px-2 py-1 rounded bg-slate-200 font-mono"></span>
-  </div>
-  <nav class="max-w-7xl mx-auto px-4 flex gap-1 text-sm overflow-x-auto">
-    <button data-tab="resident"  class="tab px-4 py-2 border-b-2 border-transparent whitespace-nowrap">1 · Cư dân</button>
-    <button data-tab="room"      class="tab px-4 py-2 border-b-2 border-transparent whitespace-nowrap">2 · Phòng họp</button>
-    <button data-tab="builder"   class="tab px-4 py-2 border-b-2 border-transparent whitespace-nowrap">3 · Agent Builder</button>
-    <button data-tab="tools"     class="tab px-4 py-2 border-b-2 border-transparent whitespace-nowrap">4 · Tool catalog</button>
-    <button data-tab="approvals" class="tab px-4 py-2 border-b-2 border-transparent whitespace-nowrap">5 · Chờ duyệt <span id="apprCount" class="ml-1 px-1.5 rounded-full bg-red-500 text-white text-xs hidden"></span></button>
-  </nav>
-</header>
+<a class="sr-only" href="#main">Bỏ qua điều hướng</a>
 
-<main class="max-w-7xl mx-auto px-4 py-5">
-
-<!-- ================= TAB 1 : CƯ DÂN ================= -->
-<section id="tab-resident" class="tabpane">
-  <div class="grid md:grid-cols-3 gap-4">
-    <div class="bg-white rounded-lg border p-4">
-      <h2 class="font-semibold mb-3">Chọn người gửi phản ánh</h2>
-      <select id="residentSel" class="w-full border rounded px-2 py-2 text-sm"></select>
-      <div id="residentInfo" class="mt-3 text-sm text-slate-600 space-y-1"></div>
-      <button id="newSession" class="mt-4 w-full text-sm border rounded px-3 py-2 hover:bg-slate-50">Bắt đầu cuộc mới</button>
-      <div id="ticketBanner" class="mt-4 hidden text-sm bg-green-50 border border-green-300 rounded p-3"></div>
+<div class="shell">
+  <!-- ============================ điều hướng ============================ -->
+  <aside class="side" id="side">
+    <button class="brand" onclick="showTab('resident')">
+      <span class="brand-mark"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8"/><path d="M8 13h5"/></svg></span>
+      <span>
+        <strong>Phòng họp agent</strong>
+        <small id="domainName">—</small>
+      </span>
+    </button>
+    <nav class="side-nav" aria-label="Khu vực làm việc">
+      <button class="nav-item" data-tab="resident"><span class="nav-ico">1</span> Cư dân</button>
+      <button class="nav-item" data-tab="room"><span class="nav-ico">2</span> Phòng họp</button>
+      <button class="nav-item" data-tab="builder"><span class="nav-ico">3</span> Agent Studio</button>
+      <button class="nav-item" data-tab="tools"><span class="nav-ico">4</span> Tool catalog</button>
+      <button class="nav-item" data-tab="bql"><span class="nav-ico">5</span> BQL duyệt
+        <span class="nav-count" id="cnt-bql" hidden>0</span></button>
+      <button class="nav-item" data-tab="don_vi"><span class="nav-ico">6</span> Đơn vị duyệt
+        <span class="nav-count" id="cnt-don_vi" hidden>0</span></button>
+    </nav>
+    <div class="side-foot">
+      <span class="pill" id="engineBadge">đang kết nối…</span>
+      <div>Dữ liệu nghiệp vụ trong bản demo là dữ liệu mô phỏng.</div>
     </div>
-    <div class="md:col-span-2 bg-white rounded-lg border flex flex-col" style="height:70vh">
-      <div id="chatLog" class="flex-1 overflow-y-auto p-4 space-y-3"></div>
-      <form id="chatForm" class="border-t p-3 flex gap-2">
-        <input id="chatInput" class="flex-1 border rounded px-3 py-2 text-sm" placeholder="Nhập phản ánh của anh/chị…" autocomplete="off">
-        <button class="bg-blue-600 text-white px-4 py-2 rounded text-sm disabled:opacity-50" id="chatSend">Gửi</button>
-      </form>
-    </div>
-  </div>
-</section>
+  </aside>
+  <div class="backdrop" id="backdrop" hidden onclick="toggleSide(false)"></div>
 
-<!-- ================= TAB 2 : PHÒNG HỌP ================= -->
-<section id="tab-room" class="tabpane hidden">
-  <div class="grid md:grid-cols-4 gap-4">
-    <div class="bg-white rounded-lg border p-3">
-      <div class="flex items-center justify-between mb-2">
-        <h2 class="font-semibold text-sm">Phản ánh</h2>
-        <button id="refreshTickets" class="text-xs border rounded px-2 py-1 hover:bg-slate-50">Tải lại</button>
+  <div>
+    <div class="topbar">
+      <button class="btn btn-icon" onclick="toggleSide(true)" aria-label="Mở điều hướng"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></svg></button>
+      <strong id="topbarTitle">Cư dân</strong>
+    </div>
+
+    <main class="main" id="main">
+
+    <!-- ======================= TAB 1 : CƯ DÂN ======================= -->
+    <section id="tab-resident" class="r-app">
+      <div class="r-greeting">
+        <h1>Gửi phản ánh tới Ban quản lý</h1>
+        <p>Chọn người gửi rồi nhắn như nhắn tin thường. Lễ tân tiếp nhận, các bộ phận họp nội bộ và trả lời lại ở đây.</p>
       </div>
-      <div id="ticketList" class="space-y-1 overflow-y-auto" style="max-height:72vh"></div>
-    </div>
-    <div class="md:col-span-2 bg-white rounded-lg border p-4 overflow-y-auto" style="max-height:78vh">
-      <div id="roomHeader" class="mb-3 text-sm text-slate-500">Chọn một phản ánh ở cột trái.</div>
-      <!-- Băng-rôn HITL: phòng họp đang đứng im chờ quản lý quyết định -->
-      <div id="roomPause" class="hidden mb-3 border-2 border-amber-400 bg-amber-50 rounded-lg p-3 text-sm sticky top-0 z-10"></div>
-      <div id="timeline" class="space-y-2"></div>
-    </div>
-    <div class="space-y-4">
-      <div class="bg-white rounded-lg border p-3">
-        <h2 class="font-semibold text-sm mb-2">Thành viên phòng họp</h2>
-        <div id="memberList" class="space-y-1 text-sm"></div>
-      </div>
-      <div class="bg-white rounded-lg border p-3">
-        <h2 class="font-semibold text-sm mb-2">Tin gửi người báo</h2>
-        <div id="replyBox" class="text-sm text-slate-600 space-y-2"></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= TAB 3 : AGENT BUILDER ================= -->
-<section id="tab-builder" class="tabpane hidden">
-  <div class="grid md:grid-cols-3 gap-4">
-    <div class="bg-white rounded-lg border p-3">
-      <div class="flex items-center justify-between mb-2">
-        <h2 class="font-semibold text-sm">Agent</h2>
-        <button id="newAgent" class="text-xs bg-blue-600 text-white rounded px-2 py-1">+ Tạo mới</button>
-      </div>
-      <div id="agentList" class="space-y-1 overflow-y-auto" style="max-height:72vh"></div>
-    </div>
-    <div class="md:col-span-2 bg-white rounded-lg border p-4 overflow-y-auto" style="max-height:78vh">
-      <div id="builderEmpty" class="text-sm text-slate-500">Chọn một agent, hoặc bấm “Tạo mới”.</div>
-
-      <!-- Tạo agent bằng mô tả (Builder) — chỉ hiện khi đang tạo agent mới -->
-      <div id="builderAiBox" class="hidden mb-4 border border-blue-200 bg-blue-50 rounded-lg p-3 space-y-2">
-        <div class="text-sm font-semibold text-blue-900">🪄 Tạo bằng mô tả</div>
-        <textarea id="builderYeuCau" rows="2" class="w-full border rounded px-2 py-1.5 text-sm"
-                  placeholder="Mô tả bằng lời bộ phận cần tạo, ví dụ: Tôi cần một bộ phận lo cây xanh, cắt tỉa, sâu bệnh, hệ thống tưới"></textarea>
-        <div class="text-xs text-blue-800">
-          Tài liệu gắn kèm khi dùng "Tự động soạn và đánh giá" (Builder không tự chọn tài liệu — quản lý chọn ở đây):
-        </div>
-        <div id="builderDocPicker" class="text-xs bg-white border rounded p-2 max-h-24 overflow-y-auto space-y-0.5"></div>
-        <div class="flex flex-wrap items-center gap-2">
-          <button type="button" id="btnBuilderDraft" class="bg-blue-600 text-white text-sm px-3 py-1.5 rounded hover:bg-blue-700">Soạn nháp</button>
-          <button type="button" id="btnBuilderAuto" class="border border-blue-300 text-blue-800 text-sm px-3 py-1.5 rounded hover:bg-blue-100">Tự động soạn và đánh giá</button>
-          <span id="builderAiStatus" class="text-xs text-blue-700"></span>
-        </div>
-        <div id="builderAiResult" class="text-sm space-y-2"></div>
-      </div>
-
-      <form id="agentForm" class="hidden space-y-4">
-        <div id="coreWarn" class="hidden text-sm bg-amber-50 border border-amber-300 rounded p-2">
-          Agent lõi — chỉ xem, không sửa được qua builder.
-        </div>
-        <div class="grid sm:grid-cols-2 gap-3">
-          <label class="block text-sm">Tên hiển thị
-            <input name="display_name" class="mt-1 w-full border rounded px-2 py-1.5" required>
-          </label>
-          <label class="block text-sm">Mã agent (slug)
-            <input name="id" class="mt-1 w-full border rounded px-2 py-1.5 font-mono" placeholder="ve_sinh"
-                   pattern="[a-z0-9][a-z0-9_-]{1,40}" minlength="2" maxlength="41" required>
-            <span class="text-xs text-slate-500">Chỉ chữ thường, số, gạch dưới, gạch ngang. Ví dụ: ve_sinh</span>
-          </label>
-        </div>
-        <label class="block text-sm">Mô tả năng lực <span class="text-red-600">*</span>
-          <textarea name="capability" rows="3" class="mt-1 w-full border rounded px-2 py-1.5" minlength="20" required></textarea>
-          <span class="text-xs flex justify-between">
-            <span class="text-slate-500">Điều phối dựa vào đây để chọn agent. Viết rõ: làm được việc gì, với đối tượng nào, trong phạm vi nào.</span>
-            <span id="capCount" class="shrink-0 pl-2 text-slate-400">0/20</span>
-          </span>
-        </label>
-        <label class="block text-sm">Prompt nghiệp vụ
-          <textarea name="business_prompt" rows="9" class="mt-1 w-full border rounded px-2 py-1.5 font-mono text-xs"></textarea>
-        </label>
+      <div class="r-grid" style="margin-top:18px">
         <div>
-          <div class="text-sm mb-1 flex items-center justify-between">
-            <span>Tool (<span id="toolCount">0</span>/10)</span>
-            <span class="text-xs text-slate-500">Cờ 🔒 = cần quản lý duyệt</span>
+          <div class="r-card">
+            <h2>Người gửi phản ánh</h2>
+            <select id="residentSel" class="r-select" aria-label="Chọn cư dân"></select>
+            <div id="residentInfo" class="r-facts"></div>
+            <button id="newSession" class="r-btn">Bắt đầu cuộc mới</button>
           </div>
-          <div id="toolPicker" class="border rounded p-2 space-y-3 max-h-64 overflow-y-auto text-sm"></div>
+          <div id="ticketBanner" class="r-ticket" hidden></div>
         </div>
-        <div id="knowledgeBox">
-          <div class="text-sm mb-1">Tài liệu (knowledge)</div>
-          <div id="docList" class="text-sm space-y-1 mb-2"></div>
-          <input type="file" id="docFile" class="text-sm" accept=".txt,.md,.pdf,.docx">
-          <button type="button" id="docUpload" class="text-xs border rounded px-2 py-1 hover:bg-slate-50">Tải lên</button>
-          <span id="docStatus" class="text-xs text-slate-500"></span>
+        <div class="r-chat">
+          <div class="r-chat-head">
+            <span class="avatar" aria-hidden="true">BQL</span>
+            <span>
+              <strong>Lễ tân Ban quản lý</strong>
+              <small id="chatStatus">Trực tuyến · trả lời trong ít phút</small>
+            </span>
+          </div>
+          <div id="chatLog" class="r-log" role="log" aria-live="polite"></div>
+          <!-- Phần việc của chính người báo trong quy trình: chốt phương án, nghiệm thu -->
+          <div id="residentApprovals" style="padding:0 20px 4px;display:flex;flex-direction:column;gap:10px"></div>
+          <form id="chatForm" class="r-compose">
+            <div class="r-quick" id="chatQuick">
+              <button type="button">Điều hòa phòng tôi bị hỏng</button>
+              <button type="button">Rác tồn đọng ở hành lang tầng 12</button>
+              <button type="button">Cho hỏi lịch thu gom rác</button>
+            </div>
+            <div class="r-compose-row">
+              <textarea id="chatInput" rows="1" placeholder="Nhập phản ánh của anh/chị…" autocomplete="off"></textarea>
+              <button class="r-send" id="chatSend" type="submit">Gửi</button>
+            </div>
+            <div class="footnote">Enter để gửi · Shift+Enter để xuống dòng.</div>
+          </form>
         </div>
-        <div id="evalGateStatus" class="text-xs"></div>
-        <div class="flex flex-wrap gap-2 pt-2 border-t">
-          <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded text-sm">Lưu</button>
-          <button type="button" id="btnEvaluate" class="border border-amber-400 text-amber-700 px-3 py-2 rounded text-sm hover:bg-amber-50">Đánh giá</button>
-          <button type="button" id="btnActivate" class="border px-3 py-2 rounded text-sm hover:bg-slate-50">Bật</button>
-          <button type="button" id="btnDisable" class="border px-3 py-2 rounded text-sm hover:bg-slate-50">Tắt</button>
-          <button type="button" id="btnTryAgent" class="border px-3 py-2 rounded text-sm hover:bg-slate-50">Chạy thử</button>
-          <button type="button" id="btnTryRouter" class="border px-3 py-2 rounded text-sm hover:bg-slate-50">Thử định tuyến</button>
-          <button type="button" id="btnVersions" class="border px-3 py-2 rounded text-sm hover:bg-slate-50">Lịch sử phiên bản</button>
-          <button type="button" id="btnDelete" class="border border-red-300 text-red-600 px-3 py-2 rounded text-sm hover:bg-red-50">Xóa</button>
+      </div>
+    </section>
+
+    <!-- ======================= TAB 2 : PHÒNG HỌP ======================= -->
+    <section id="tab-room" hidden>
+      <div class="page-head">
+        <div>
+          <span class="eyebrow">Vận hành</span>
+          <h1>Phòng họp xử lý phản ánh</h1>
+          <p>Mỗi phản ánh là một phòng riêng: ai đang xử lý, việc tiếp theo là gì, và toàn bộ nhật ký kỹ thuật.</p>
         </div>
-      </form>
-      <div id="sandboxOut" class="mt-4"></div>
-    </div>
-  </div>
-</section>
+        <div class="actions">
+          <button id="refreshTickets" class="btn">Tải lại</button>
+        </div>
+      </div>
 
-<!-- ================= TAB 4 : TOOL CATALOG ================= -->
-<section id="tab-tools" class="tabpane hidden">
-  <div class="bg-white rounded-lg border p-4">
-    <div class="flex items-center justify-between mb-3">
-      <h2 class="font-semibold">Tool catalog</h2>
-      <button id="refreshTools" class="text-sm border rounded px-3 py-1 hover:bg-slate-50">Kết nối lại MCP</button>
-    </div>
-    <div class="overflow-x-auto">
-      <table class="w-full text-sm">
-        <thead class="text-left text-slate-500 border-b">
-          <tr><th class="py-2">Tên</th><th>Provider</th><th>Phạm vi</th><th>Cần duyệt</th><th>Context params</th><th>Trạng thái</th></tr>
-        </thead>
-        <tbody id="toolTable"></tbody>
-      </table>
-    </div>
-  </div>
-</section>
+      <div class="workspace">
+        <div class="mobile-rooms">
+          <button class="btn" onclick="toggleQueue()">Chọn phản ánh</button>
+          <span class="muted" id="queueSummary"></span>
+        </div>
+        <div class="queue" id="queue">
+          <div class="queue-head">
+            <div class="section-title"><h2>Phản ánh</h2><span id="ticketCount"></span></div>
+            <label class="search">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.2-3.2"/></svg>
+              <input id="ticketSearch" type="search" placeholder="Tìm mã, nội dung…" aria-label="Tìm phản ánh">
+            </label>
+            <div class="segments" id="ticketFilter" role="tablist">
+              <button data-f="all" class="is-active">Tất cả</button>
+              <button data-f="cho_duyet">Chờ duyệt</button>
+              <button data-f="dang_xu_ly">Đang xử lý</button>
+              <button data-f="hoan_tat">Hoàn tất</button>
+            </div>
+          </div>
+          <div class="queue-items" id="ticketList"></div>
+        </div>
 
-<!-- ================= TAB 5 : CHỜ DUYỆT ================= -->
-<section id="tab-approvals" class="tabpane hidden">
-  <div class="bg-white rounded-lg border p-4">
-    <div class="flex items-center justify-between mb-3">
-      <h2 class="font-semibold">Hành động chờ quản lý duyệt</h2>
-      <select id="apprFilter" class="border rounded px-2 py-1 text-sm">
-        <option value="cho_duyet">Đang chờ duyệt</option>
-        <option value="da_thuc_hien">Đã thực hiện</option>
-        <option value="tu_choi">Đã từ chối</option>
-        <option value="">Tất cả</option>
-      </select>
-    </div>
-    <div id="apprList" class="space-y-3"></div>
-  </div>
-</section>
+        <div class="room">
+          <div class="room-head" id="roomHead">
+            <div class="empty" id="roomEmpty">
+              <h2>Chưa chọn phản ánh</h2>
+              <div>Chọn một phản ánh ở danh sách bên trái để mở phòng họp.</div>
+            </div>
+            <div id="roomHeader" hidden></div>
+            <div id="roomChain" class="chain" hidden></div>
+          <div id="roomPause" hidden></div>
+          </div>
+          <div class="room-tabs" id="roomTabs" role="tablist" hidden>
+            <button role="tab" data-rt="chat" aria-selected="true">Trao đổi <span class="tab-count" id="cntChat">0</span></button>
+            <button role="tab" data-rt="tasks" aria-selected="false">Công việc <span class="tab-count" id="cntTasks">0</span></button>
+            <button role="tab" data-rt="log" aria-selected="false">Nhật ký <span class="tab-count" id="cntLog">0</span></button>
+            <button role="tab" data-rt="members" aria-selected="false">Thành viên <span class="tab-count" id="cntMembers">0</span></button>
+          </div>
+          <div class="room-panel" id="panel-chat">
+            <div class="panel-scroll" id="chatFeed"></div>
+          </div>
+          <div class="room-panel" id="panel-tasks" hidden>
+            <div class="panel-scroll">
+              <div id="taskList"></div>
+            </div>
+          </div>
+          <div class="room-panel" id="panel-log" hidden>
+            <div class="panel-scroll">
+              <div class="section-title">
+                <span class="muted">Toàn bộ sự kiện phòng họp, kể cả payload kỹ thuật.</span>
+                <select id="logFilter" class="r-select" style="width:auto;font-size:11px;padding:6px 9px" aria-label="Lọc nhật ký">
+                  <option value="">Tất cả sự kiện</option>
+                  <option value="router_decision">Điều phối</option>
+                  <option value="agent">Agent</option>
+                  <option value="tool">Tool &amp; duyệt</option>
+                  <option value="guard_triggered">Guard</option>
+                </select>
+              </div>
+              <div id="timeline"></div>
+            </div>
+          </div>
+          <div class="room-panel" id="panel-members" hidden>
+            <div class="panel-scroll">
+              <div class="section-title"><h3>Thành viên phòng họp</h3></div>
+              <p class="muted">Danh sách lấy từ registry lúc mở phòng; ai đang phát biểu được tô sáng.</p>
+              <div id="memberList"></div>
+              <div class="section-title" style="margin-top:22px"><h3>Tin đã gửi người báo</h3></div>
+              <div id="replyBox"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-</main>
+    <!-- ======================= TAB 3 : AGENT STUDIO ======================= -->
+    <section id="tab-builder" hidden>
+      <div class="page-head">
+        <div>
+          <span class="eyebrow">Nền tảng</span>
+          <h1>Agent Studio</h1>
+          <p>Mô tả nhu cầu → rà soát cấu hình → chạy thử &amp; bật. Agent là dữ liệu: không sửa dòng code nào.</p>
+        </div>
+        <div class="actions"><button id="newAgent" class="btn btn-primary">+ Tạo agent mới</button></div>
+      </div>
+
+      <div class="builder-layout">
+        <div class="agent-list">
+          <div class="agent-list-head">
+            <h3>Agent trong domain</h3>
+            <span class="muted" id="agentCount"></span>
+          </div>
+          <div class="agent-list-items" id="agentList"></div>
+        </div>
+
+        <div class="stage">
+          <div id="builderEmpty" class="surface pad empty">
+            <h2>Chưa chọn agent</h2>
+            <div>Chọn một agent bên trái để xem và sửa, hoặc bấm “Tạo agent mới”.</div>
+          </div>
+
+          <ol class="steps" id="builderSteps" hidden>
+            <li data-st="1"><span>1</span> Mô tả nhu cầu</li>
+            <li data-st="2"><span>2</span> Rà soát cấu hình</li>
+            <li data-st="3"><span>3</span> Chạy thử &amp; bật</li>
+          </ol>
+
+          <div id="builderAiBox" class="ai-box" hidden>
+            <h2>Tạo bằng mô tả</h2>
+            <p class="muted" style="margin:6px 0 12px">Builder soạn bản nháp từ mô tả của bạn — tên, năng lực, prompt và tool. Mọi giá trị đều sửa được trước khi lưu.</p>
+            <div class="tmpl-grid" id="builderTemplates"></div>
+            <label class="field" style="margin-top:0">
+              <span>Agent này cần giúp việc gì?</span>
+              <textarea id="builderYeuCau" rows="2" placeholder="Ví dụ: Tôi cần một bộ phận lo cây xanh, cắt tỉa, sâu bệnh, hệ thống tưới"></textarea>
+            </label>
+            <div class="field" style="margin:0">
+              <span>Tài liệu gắn kèm khi dùng “Tự động soạn và đánh giá”</span>
+              <small>Builder không tự chọn tài liệu — quản lý chọn ở đây.</small>
+              <div id="builderDocPicker" class="doc-picker"></div>
+            </div>
+            <div class="actions" style="margin-top:14px">
+              <button type="button" id="btnBuilderDraft" class="btn btn-primary">Soạn nháp</button>
+              <button type="button" id="btnBuilderAuto" class="btn">Tự động soạn và đánh giá</button>
+              <span class="muted" id="builderAiStatus"></span>
+            </div>
+            <div id="builderAiResult"></div>
+          </div>
+
+          <form id="agentForm" hidden>
+            <div id="coreWarn" class="notice" hidden style="margin-bottom:14px">
+              Agent lõi — chỉ xem, không sửa được qua Studio.
+            </div>
+
+            <div class="config-section">
+              <h2>Danh tính &amp; năng lực</h2>
+              <p>Điều phối chọn agent dựa trên mô tả năng lực, nên phần này quyết định ticket nào tới tay agent.</p>
+              <div class="fields-two">
+                <label class="field"><span>Tên hiển thị</span>
+                  <input name="display_name" required>
+                </label>
+                <label class="field"><span>Mã agent (slug)</span>
+                  <input name="id" class="mono" placeholder="ve_sinh" pattern="[a-z0-9][a-z0-9_-]{1,40}" minlength="2" maxlength="41" required>
+                  <small>Chỉ chữ thường, số, gạch dưới, gạch ngang.</small>
+                </label>
+              </div>
+              <label class="field"><span>Mô tả năng lực *</span>
+                <textarea name="capability" rows="3" minlength="20" required></textarea>
+                <small style="display:flex;justify-content:space-between;gap:10px">
+                  <span>Viết rõ: làm được việc gì, với đối tượng nào, trong phạm vi nào.</span>
+                  <span id="capCount" class="nowrap">0/20</span>
+                </small>
+              </label>
+            </div>
+
+            <div class="config-section">
+              <div class="section-title">
+                <h2>Quyền dùng tool</h2>
+                <span><span id="toolCount">0</span>/10 · 🔒 = cần quản lý duyệt</span>
+              </div>
+              <div class="policy" style="margin-bottom:14px">
+                <div><b>Được làm</b><span>Các tool đánh dấu bên dưới, luôn bị tiêm tham số từ ticket.</span></div>
+                <div><b>Cần người duyệt</b><span>Tool 🔒 dừng cả phòng họp lại chờ quản lý quyết định.</span></div>
+                <div><b>Không được làm</b><span>Mọi tool không đánh dấu — ToolExecutor chặn ở tầng nền tảng.</span></div>
+              </div>
+              <div id="toolPicker"></div>
+            </div>
+
+            <div class="config-section">
+              <h2>Prompt nghiệp vụ</h2>
+              <p>Luật phòng họp do nền tảng áp; phần này chỉ mô tả nhiệm vụ riêng của bộ phận.</p>
+              <label class="field" style="margin:0">
+                <textarea name="business_prompt" rows="9" class="mono" style="font-size:11px"></textarea>
+              </label>
+            </div>
+
+            <div class="config-section" id="knowledgeBox">
+              <div class="section-title"><h2>Tài liệu (knowledge)</h2><span class="muted" id="docStatus"></span></div>
+              <div id="docList"></div>
+              <div class="actions" style="margin-top:12px">
+                <input type="file" id="docFile" accept=".txt,.md,.pdf,.docx" style="font-size:12px">
+                <button type="button" id="docUpload" class="btn btn-compact">Tải lên</button>
+              </div>
+            </div>
+
+            <div class="config-section">
+              <div class="section-title"><h2>Chạy thử &amp; chốt chặn</h2></div>
+              <div id="evalGateStatus" class="gate">Chưa chạy đánh giá lần nào trên phiên bản này.</div>
+              <div class="actions" style="margin-top:14px">
+                <button type="button" id="btnTryAgent" class="btn">Chạy thử agent</button>
+                <button type="button" id="btnTryRouter" class="btn">Thử định tuyến</button>
+                <button type="button" id="btnEvaluate" class="btn">Đánh giá</button>
+                <button type="button" id="btnVersions" class="btn">Lịch sử phiên bản</button>
+              </div>
+              <div id="sandboxOut"></div>
+            </div>
+
+            <div class="builder-footer">
+              <div class="actions">
+                <button type="submit" class="btn btn-primary">Lưu cấu hình</button>
+                <button type="button" id="btnActivate" class="btn btn-ok">Bật</button>
+                <button type="button" id="btnDisable" class="btn">Tắt</button>
+              </div>
+              <button type="button" id="btnDelete" class="btn btn-danger">Xóa agent</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= TAB 4 : TOOL CATALOG ======================= -->
+    <section id="tab-tools" hidden>
+      <div class="page-head">
+        <div>
+          <span class="eyebrow">Nền tảng</span>
+          <h1>Tool catalog</h1>
+          <p>Nguồn duy nhất về việc agent được làm gì. Tool ngoài cắm vào qua MCP, không sửa code lõi.</p>
+        </div>
+        <div class="actions"><button id="refreshTools" class="btn">Kết nối lại MCP</button></div>
+      </div>
+      <div class="toolbar">
+        <label class="search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.2-3.2"/></svg>
+          <input id="toolSearch" type="search" placeholder="Tìm tool, provider…" aria-label="Tìm tool"></label>
+        <div class="segments" id="toolFilter">
+          <button data-f="all" class="is-active">Tất cả</button>
+          <button data-f="platform">Platform</button>
+          <button data-f="domain">Domain</button>
+          <button data-f="business">Nghiệp vụ</button>
+          <button data-f="approval">Cần duyệt</button>
+        </div>
+      </div>
+      <div class="surface pad">
+        <div class="table-wrap">
+          <table class="grid">
+            <thead><tr><th>Tool</th><th>Provider</th><th>Phạm vi</th><th>Duyệt</th><th>Context params</th><th>Trạng thái</th></tr></thead>
+            <tbody id="toolTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= TAB 5 : BQL DUYỆT ======================= -->
+    <section id="tab-bql" hidden>
+      <div class="page-head">
+        <div>
+          <span class="eyebrow">Kiểm soát</span>
+          <h1 id="title-bql">BQL duyệt</h1>
+          <p id="desc-bql">Ban quản lý duyệt điều đơn vị, chi phí, miễn giảm. Tool cần duyệt không bao giờ tự chạy: phòng họp dừng lại chờ quyết định rồi họp tiếp với kết quả thật.</p>
+        </div>
+        <div class="segments" id="filter-bql">
+          <button data-f="cho_duyet" class="is-active">Đang chờ</button>
+          <button data-f="da_thuc_hien">Đã thực hiện</button>
+          <button data-f="tu_choi">Đã từ chối</button>
+          <button data-f="">Tất cả</button>
+        </div>
+      </div>
+      <div id="list-bql"></div>
+    </section>
+
+    <!-- ======================= TAB 6 : ĐƠN VỊ THỰC HIỆN DUYỆT ======================= -->
+    <section id="tab-don_vi" hidden>
+      <div class="page-head">
+        <div>
+          <span class="eyebrow">Đơn vị thực hiện</span>
+          <h1 id="title-don_vi">Đơn vị thực hiện duyệt</h1>
+          <p id="desc-don_vi">Một hàng đợi dùng chung cho kỹ thuật, an ninh, vệ sinh và nhà thầu ngoài: xác nhận tiếp nhận lệnh và báo đã xử lý xong. Mỗi bên là một MCP server riêng.</p>
+        </div>
+        <div class="segments" id="filter-don_vi">
+          <button data-f="cho_duyet" class="is-active">Đang chờ</button>
+          <button data-f="da_thuc_hien">Đã thực hiện</button>
+          <button data-f="tu_choi">Đã từ chối</button>
+          <button data-f="">Tất cả</button>
+        </div>
+      </div>
+      <div id="list-don_vi"></div>
+    </section>
+
+    </main>
+  </div>
+</div>
+
 <script src="/static/app.js"></script>
 </body>
 </html>

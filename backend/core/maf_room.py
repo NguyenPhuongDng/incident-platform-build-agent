@@ -52,6 +52,7 @@ from backend.app.events import bus
 from backend.app.models import Action, Ticket
 from backend.core.orchestrator import Orchestrator
 from backend.core.receptionist import Receptionist, ticket_to_dict
+from backend.core import followup, workflow
 from backend.domain.loader import load_domain
 from backend.knowledge import store
 from backend.tools.catalog import get_catalog
@@ -77,6 +78,7 @@ class RoomSession:
     pending_questions: list[str] = field(default_factory=list)
     retry_used: bool = False
     handoff_retry_used: bool = False
+    chain_retry_used: bool = False
     turns: int = 0
 
     @property
@@ -178,19 +180,34 @@ class KnowledgeProvider(ContextProvider):
         )
 
         if output.get("can_hoi_them_nguoi_bao"):
-            # Ghim câu hỏi lại thay vì dừng phòng ngay. Một phản ánh nhiều ý ("sửa giúp"
-            # kèm "cho hỏi chi phí") chỉ cần một bộ phận cần hỏi lại là những bộ phận còn
-            # việc mất lượt, và phần việc của họ rơi sang phiên sau. Để Điều phối chạy nốt,
-            # cuối phiên Lễ tân hỏi người báo một thể thay vì hỏi làm nhiều đợt.
-            s.pending_questions.append(output["can_hoi_them_nguoi_bao"])
-            bus.emit(
-                s.ticket_id,
-                "guard_triggered",
-                {"guard": "can_hoi_nguoi_bao", "agent_id": agent_id,
-                 "cau_hoi": output["can_hoi_them_nguoi_bao"],
-                 "xu_ly": "ghim câu hỏi, chạy tiếp các bộ phận còn việc"},
-                actor=agent_id,
-            )
+            cau_hoi = output["can_hoi_them_nguoi_bao"]
+            ly_do_chan = followup.block_reason(s.ticket_id, cau_hoi)
+            if ly_do_chan:
+            # Guard: đã hỏi ý này rồi (và đã được trả lời), hoặc đã hỏi quá số vòng cho
+            # phép. Bỏ câu hỏi khỏi output luôn, nếu không Lễ tân vẫn đem nó đi hỏi lại.
+                output["can_hoi_them_nguoi_bao"] = None
+                bus.emit(
+                    s.ticket_id,
+                    "guard_triggered",
+                    {"guard": "khong_hoi_lai_nguoi_bao", "agent_id": agent_id,
+                     "cau_hoi": cau_hoi, "ly_do": ly_do_chan,
+                     "xu_ly": "bỏ câu hỏi, buộc kết luận với thông tin đang có"},
+                    actor=agent_id,
+                )
+            else:
+                # Ghim câu hỏi lại thay vì dừng phòng ngay. Một phản ánh nhiều ý ("sửa giúp"
+                # kèm "cho hỏi chi phí") chỉ cần một bộ phận cần hỏi lại là những bộ phận còn
+                # việc mất lượt, và phần việc của họ rơi sang phiên sau. Để Điều phối chạy nốt,
+                # cuối phiên Lễ tân hỏi người báo một thể thay vì hỏi làm nhiều đợt.
+                s.pending_questions.append(cau_hoi)
+                bus.emit(
+                    s.ticket_id,
+                    "guard_triggered",
+                    {"guard": "can_hoi_nguoi_bao", "agent_id": agent_id,
+                     "cau_hoi": cau_hoi,
+                     "xu_ly": "ghim câu hỏi, chạy tiếp các bộ phận còn việc"},
+                    actor=agent_id,
+                )
 
 
 def _tool_calls_of(response: Any) -> list[dict[str, Any]]:
@@ -445,9 +462,33 @@ class MafRoom:
                 bus.emit(session.ticket_id, "router_decision",
                          {**decision.to_dict(), "engine": "maf"}, actor="dieu_phoi")
             if decision.hanh_dong == "ket_thuc":
-                session.stop_reason = decision.ly_do or "Điều phối kết thúc phiên"
-                session.next_speaker = ""
-                return
+                # Guard: quy trình xác nhận đã bắt đầu thì không được đóng phòng giữa chừng.
+                note = workflow.blocking_note(session.ticket_id, self.domain)
+                if note and not session.chain_retry_used:
+                    session.chain_retry_used = True
+                    bus.emit(
+                        session.ticket_id,
+                        "guard_triggered",
+                        {"guard": "quy_trinh_xac_nhan_chua_xong", "chi_tiet": note,
+                         "xu_ly": "nhắc Điều phối làm nốt bước còn thiếu trước khi kết thúc"},
+                        actor="dieu_phoi",
+                    )
+                    decision = self.orchestrator.decide(
+                        ticket=session.ticket,
+                        members=selectable,
+                        transcript=session.transcript,
+                        pending_suggestions=_last_suggestions(session),
+                        pending_actions=[a["tool"] for a in _pending_actions(session.ticket_id)],
+                        turns_used=session.turns,
+                        max_turns=self.domain.max_room_turns,
+                        extra_note=note,
+                    )
+                    bus.emit(session.ticket_id, "router_decision",
+                             {**decision.to_dict(), "engine": "maf"}, actor="dieu_phoi")
+                if decision.hanh_dong == "ket_thuc":
+                    session.stop_reason = decision.ly_do or "Điều phối kết thúc phiên"
+                    session.next_speaker = ""
+                    return
 
         if session.member(decision.agent_id) is None or decision.agent_id not in {m["id"] for m in selectable}:
             bus.emit(
@@ -566,6 +607,8 @@ class MafRoom:
         ticket_id = session.ticket_id
         pending = _pending_actions(ticket_id)
         if session.pending_questions:
+            # Ghim câu hỏi lên ticket để lượt trả lời của người báo ghép được vào đúng câu.
+            followup.pin(ticket_id, session.pending_questions)
             final_status = "cho_cu_dan"
         elif pending:
             final_status = "cho_duyet"

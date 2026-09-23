@@ -16,7 +16,11 @@ from backend.app.config import settings
 logger = logging.getLogger("mcp")
 
 # server key -> url ; adding a department = adding a line here + entries in catalog.yaml
-MCP_SERVERS: dict[str, str] = {"ky_thuat": settings.mcp_ky_thuat_url}
+MCP_SERVERS: dict[str, str] = {
+    "ky_thuat": settings.mcp_ky_thuat_url,
+    "an_ninh": settings.mcp_an_ninh_url,
+    "ve_sinh": settings.mcp_ve_sinh_url,
+}
 
 
 class _LoopThread:

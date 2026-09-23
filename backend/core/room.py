@@ -19,6 +19,7 @@ from backend.app.events import bus
 from backend.app.models import Action, Ticket
 from backend.core.orchestrator import Orchestrator
 from backend.core.receptionist import Receptionist, ticket_to_dict
+from backend.core import followup, workflow
 from backend.domain.loader import load_domain
 
 logger = logging.getLogger("room")
@@ -83,6 +84,7 @@ class Room:
         stop_reason = ""
         pending_questions: list[str] = []
         retry_used = False
+        chain_retry_used = False
 
         turns = 0
         while turns < max_turns:
@@ -103,8 +105,27 @@ class Room:
             bus.emit(ticket_id, "router_decision", decision.to_dict(), actor="dieu_phoi")
 
             if decision.hanh_dong == "ket_thuc":
-                stop_reason = decision.ly_do or "Điều phối kết thúc phiên"
-                break
+                # Guard: quy trình xác nhận đã bắt đầu thì không được đóng phòng giữa chừng.
+                note = workflow.blocking_note(ticket_id, self.domain)
+                if note and not chain_retry_used:
+                    chain_retry_used = True
+                    bus.emit(
+                        ticket_id,
+                        "guard_triggered",
+                        {"guard": "quy_trinh_xac_nhan_chua_xong", "chi_tiet": note,
+                         "xu_ly": "nhắc Điều phối làm nốt bước còn thiếu trước khi kết thúc"},
+                        actor="dieu_phoi",
+                    )
+                    decision = self.orchestrator.decide(
+                        ticket=ticket, members=available, transcript=transcript,
+                        pending_suggestions=pending_suggestions,
+                        pending_actions=[a["tool"] for a in self._pending_actions(ticket_id)],
+                        turns_used=turns, max_turns=max_turns, extra_note=note,
+                    )
+                    bus.emit(ticket_id, "router_decision", decision.to_dict(), actor="dieu_phoi")
+                if decision.hanh_dong == "ket_thuc":
+                    stop_reason = decision.ly_do or "Điều phối kết thúc phiên"
+                    break
 
             agent = next((m for m in available if m["id"] == decision.agent_id), None)
             if agent is None:
@@ -174,17 +195,32 @@ class Room:
             pending_suggestions = [s for s in suggested if s]
 
             if result.output.get("can_hoi_them_nguoi_bao"):
-                # Xem ghi chú tương ứng trong maf_room.py: ghim câu hỏi lại và chạy tiếp,
-                # để một bộ phận cần hỏi lại không làm các bộ phận còn việc mất lượt.
-                pending_questions.append(result.output["can_hoi_them_nguoi_bao"])
-                bus.emit(
-                    ticket_id,
-                    "guard_triggered",
-                    {"guard": "can_hoi_nguoi_bao", "agent_id": agent["id"],
-                     "cau_hoi": result.output["can_hoi_them_nguoi_bao"],
-                     "xu_ly": "ghim câu hỏi, chạy tiếp các bộ phận còn việc"},
-                    actor=agent["id"],
-                )
+                cau_hoi = result.output["can_hoi_them_nguoi_bao"]
+                ly_do_chan = followup.block_reason(ticket_id, cau_hoi)
+                if ly_do_chan:
+            # Guard: đã hỏi ý này rồi (và đã được trả lời), hoặc đã hỏi quá số vòng cho
+            # phép. Bỏ câu hỏi khỏi output luôn, nếu không Lễ tân vẫn đem nó đi hỏi lại.
+                    result.output["can_hoi_them_nguoi_bao"] = None
+                    bus.emit(
+                        ticket_id,
+                        "guard_triggered",
+                        {"guard": "khong_hoi_lai_nguoi_bao", "agent_id": agent["id"],
+                         "cau_hoi": cau_hoi, "ly_do": ly_do_chan,
+                         "xu_ly": "bỏ câu hỏi, buộc kết luận với thông tin đang có"},
+                        actor=agent["id"],
+                    )
+                else:
+                    # Xem ghi chú tương ứng trong maf_room.py: ghim câu hỏi lại và chạy tiếp,
+                    # để một bộ phận cần hỏi lại không làm các bộ phận còn việc mất lượt.
+                    pending_questions.append(cau_hoi)
+                    bus.emit(
+                        ticket_id,
+                        "guard_triggered",
+                        {"guard": "can_hoi_nguoi_bao", "agent_id": agent["id"],
+                         "cau_hoi": cau_hoi,
+                         "xu_ly": "ghim câu hỏi, chạy tiếp các bộ phận còn việc"},
+                        actor=agent["id"],
+                    )
 
         if turns >= max_turns and not stop_reason:
             bus.emit(
@@ -198,6 +234,7 @@ class Room:
         # ---------------------------------------------------------- wrap-up
         pending = self._pending_actions(ticket_id)
         if pending_questions:
+            followup.pin(ticket_id, pending_questions)
             final_status = "cho_cu_dan"
         elif pending:
             final_status = "cho_duyet"

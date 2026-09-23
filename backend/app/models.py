@@ -112,6 +112,9 @@ class Action(SQLModel, table=True):
     tool: str = ""
     args: dict[str, Any] = Field(default_factory=dict, sa_column=Column(JSON))
     status: str = Field(default="cho_duyet", index=True)  # cho_duyet|da_duyet|tu_choi|da_thuc_hien|loi
+    # Hàng đợi nào phải quyết định: id một vai trò khai trong domain.yaml
+    # (cu_dan | bql | don_vi ...). Cột thêm sau nên `_patch_missing_columns()` tự vá DB cũ.
+    approver_role: str = Field(default="bql", index=True)
     result: dict[str, Any] = Field(default_factory=dict, sa_column=Column(JSON))
     created_at: datetime = Field(default_factory=_now)
     decided_at: Optional[datetime] = None

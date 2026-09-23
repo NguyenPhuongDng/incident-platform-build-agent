@@ -18,6 +18,7 @@ from backend.app.config import settings
 from backend.app.db import session_scope
 from backend.app.events import bus
 from backend.app.models import ChatMessage, Ticket
+from backend.core import followup
 from backend.domain.loader import DomainPack, load_domain
 from backend.knowledge import store
 from backend.llm import qwen_client as llm
@@ -369,6 +370,9 @@ class Receptionist:
                 history = [history]
             history.append(answer)
             fields["thong_tin_bo_sung"] = history
+            # Gắn câu trả lời vào ĐÚNG câu hỏi đã ghim. Không có bước này thì lượt sau
+            # agent chỉ thấy một danh sách câu trả lời rời rạc, không biết mình đã hỏi gì.
+            fields = followup.fold_answer(fields, answer)
             t.fields = fields
             t.status = "dang_xu_ly"
             t.updated_at = datetime.utcnow()

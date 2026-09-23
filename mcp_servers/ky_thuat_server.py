@@ -121,6 +121,49 @@ def dieu_ktv_khan_cap(
     return {"ma_lenh_dieu": code, "trang_thai": "da_dieu", **payload}
 
 
+def _find_record(code: str) -> dict | None:
+    if not STORE.exists():
+        return None
+    return next((r for r in json.loads(STORE.read_text(encoding="utf-8")) if r["ma"] == code), None)
+
+
+@mcp.tool()
+def ktv_xac_nhan_tiep_nhan(
+    ma_lenh: Annotated[str, Field(description="Mã lệnh điều KTV hoặc mã phiếu sửa chữa cần xác nhận")],
+    ma_ktv: Annotated[str, Field(description="Mã kỹ thuật viên nhận việc")] = "",
+    ghi_chu: Annotated[str, Field(description="Ghi chú khi nhận việc, ví dụ thời gian có mặt dự kiến")] = "",
+    sandbox: Annotated[bool, Field(description="Hệ thống tự điền: true khi đang chạy thử/đánh giá")] = False,
+) -> dict:
+    """Kỹ thuật viên xác nhận đã tiếp nhận lệnh và sẽ tới hiện trường."""
+    lenh = _find_record(ma_lenh)
+    if lenh is None and not sandbox:
+        return {"loi": f"Không tìm thấy lệnh/phiếu '{ma_lenh}'"}
+    code = _new_code("KTX", sandbox=sandbox)
+    payload = {"ma_lenh": ma_lenh, "ma_ktv": ma_ktv or (lenh or {}).get("ma_ktv", ""),
+               "ghi_chu": ghi_chu, "trang_thai": "da_tiep_nhan"}
+    _save_record("ktv_tiep_nhan", code, payload, sandbox=sandbox)
+    return {"ma_xac_nhan": code, **payload}
+
+
+@mcp.tool()
+def ktv_bao_hoan_thanh(
+    ma_lenh: Annotated[str, Field(description="Mã lệnh điều KTV hoặc mã phiếu sửa chữa đã làm xong")],
+    ket_qua: Annotated[str, Field(description="Đã làm gì, thay vật tư gì, còn tồn tại gì không")],
+    vat_tu_da_thay: Annotated[str, Field(description="Danh sách vật tư đã thay, để trống nếu không có")] = "",
+    sandbox: Annotated[bool, Field(description="Hệ thống tự điền: true khi đang chạy thử/đánh giá")] = False,
+) -> dict:
+    """Kỹ thuật viên báo đã sửa xong, chờ người báo nghiệm thu."""
+    lenh = _find_record(ma_lenh)
+    if lenh is None and not sandbox:
+        return {"loi": f"Không tìm thấy lệnh/phiếu '{ma_lenh}'"}
+    code = _new_code("KTH", sandbox=sandbox)
+    payload = {"ma_lenh": ma_lenh, "ket_qua": ket_qua, "vat_tu_da_thay": vat_tu_da_thay,
+               "trang_thai": "da_hoan_thanh",
+               "thoi_diem_hoan_thanh": datetime.now().strftime("%Y-%m-%d %H:%M")}
+    _save_record("ktv_hoan_thanh", code, payload, sandbox=sandbox)
+    return {"ma_bao_cao": code, **payload}
+
+
 if __name__ == "__main__":
     print(f"MCP server 'ky_thuat' chạy streamable HTTP tại http://127.0.0.1:{PORT}/mcp", file=sys.stderr)
     mcp.run(transport="streamable-http", host="127.0.0.1", port=PORT)

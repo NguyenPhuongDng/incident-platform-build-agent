@@ -55,9 +55,9 @@
 - name: dieu_ktv_khan_cap
   provider: mcp:ky_thuat
   scope: business
-  requires_approval: true
+  approval_role: bql
   context_params: [ma_can_ho]
-  manager_description: "Điều kỹ thuật viên đi xử lý khẩn cấp ngoài lịch (cần quản lý duyệt)"
+  manager_description: "Điều kỹ thuật viên đi xử lý khẩn cấp ngoài lịch (BQL duyệt)"
 
 - name: tra_cong_no
   provider: local
@@ -69,9 +69,9 @@
 - name: mien_giam_phi
   provider: local
   scope: business
-  requires_approval: true
+  approval_role: bql
   context_params: [ma_can_ho]
-  manager_description: "Đề xuất miễn giảm một khoản phí cho căn hộ người báo (cần quản lý duyệt)"
+  manager_description: "Đề xuất miễn giảm một khoản phí cho căn hộ người báo (BQL duyệt)"
 
 - name: lap_bao_gia_sua_chua
   provider: local
@@ -107,3 +107,92 @@
   requires_approval: false
   context_params: []
   manager_description: "Xem lịch thu gom rác, điểm tập kết và tổ vệ sinh phụ trách"
+
+# --------------------------------------------------------------------------- chuỗi xác nhận
+# `approval_role` quyết định hành động chờ duyệt rơi vào hàng đợi nào. Thêm một bên
+# mới (nhà thầu thang máy, cây xanh...) = thêm MCP server + vài dòng ở đây, không
+# sửa dòng code lõi nào: ToolExecutor chỉ đọc vai trò rồi định tuyến.
+
+- name: chot_phuong_an_voi_cu_dan
+  provider: local
+  scope: platform
+  approval_role: cu_dan
+  context_params: [ticket_id]
+  manager_description: "Gửi phương án xử lý cho người báo chốt trước khi triển khai (cư dân duyệt)"
+
+- name: cu_dan_xac_nhan_hoan_thanh
+  provider: local
+  scope: platform
+  approval_role: cu_dan
+  context_params: [ticket_id]
+  manager_description: "Đề nghị người báo nghiệm thu sau khi đã xử lý xong (cư dân duyệt)"
+
+- name: ktv_xac_nhan_tiep_nhan
+  provider: mcp:ky_thuat
+  scope: business
+  approval_role: don_vi
+  context_params: []
+  manager_description: "Kỹ thuật viên xác nhận đã tiếp nhận lệnh (đơn vị thực hiện duyệt)"
+
+- name: ktv_bao_hoan_thanh
+  provider: mcp:ky_thuat
+  scope: business
+  approval_role: don_vi
+  context_params: []
+  manager_description: "Kỹ thuật viên báo đã sửa xong, chờ người báo nghiệm thu (đơn vị thực hiện duyệt)"
+
+- name: tra_ca_truc_an_ninh
+  provider: mcp:an_ninh
+  scope: business
+  requires_approval: false
+  context_params: []
+  manager_description: "Xem các tổ an ninh đang trực và ca trực của họ"
+
+- name: dieu_to_an_ninh
+  provider: mcp:an_ninh
+  scope: business
+  approval_role: bql
+  context_params: [ma_can_ho]
+  manager_description: "Điều một tổ an ninh tới hiện trường (BQL duyệt)"
+
+- name: an_ninh_xac_nhan_tiep_nhan
+  provider: mcp:an_ninh
+  scope: business
+  approval_role: don_vi
+  context_params: []
+  manager_description: "Tổ an ninh xác nhận đã tiếp nhận lệnh điều (đơn vị thực hiện duyệt)"
+
+- name: an_ninh_bao_hoan_thanh
+  provider: mcp:an_ninh
+  scope: business
+  approval_role: don_vi
+  context_params: []
+  manager_description: "Tổ an ninh báo đã xử lý xong tại hiện trường (đơn vị thực hiện duyệt)"
+
+- name: tra_to_ve_sinh
+  provider: mcp:ve_sinh
+  scope: business
+  requires_approval: false
+  context_params: []
+  manager_description: "Xem tổ vệ sinh đang trực và các dịch vụ xử lý đột xuất"
+
+- name: dieu_to_ve_sinh
+  provider: mcp:ve_sinh
+  scope: business
+  approval_role: bql
+  context_params: []
+  manager_description: "Điều tổ vệ sinh đi xử lý ngoài lịch cố định (BQL duyệt)"
+
+- name: ve_sinh_xac_nhan_tiep_nhan
+  provider: mcp:ve_sinh
+  scope: business
+  approval_role: don_vi
+  context_params: []
+  manager_description: "Tổ vệ sinh xác nhận đã tiếp nhận lệnh điều (đơn vị thực hiện duyệt)"
+
+- name: ve_sinh_bao_hoan_thanh
+  provider: mcp:ve_sinh
+  scope: business
+  approval_role: don_vi
+  context_params: []
+  manager_description: "Tổ vệ sinh báo đã xử lý xong (đơn vị thực hiện duyệt)"

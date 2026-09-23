@@ -28,6 +28,10 @@ class ToolSpec:
     provider: str                      # "local" | "mcp:<server>"
     scope: str                         # platform | domain | business
     requires_approval: bool = False
+    # Ai phải duyệt tool này. Chuỗi tự do do domain pack định nghĩa (xem
+    # `approval_roles` trong domain.yaml) — lõi không biết "cư dân" hay "BQL" là gì,
+    # chỉ biết định tuyến hành động chờ duyệt tới đúng hàng đợi mang tên đó.
+    approval_role: str = ""
     context_params: list[str] = field(default_factory=list)
     manager_description: str = ""
 
@@ -85,6 +89,7 @@ class ToolSpec:
             "provider": self.provider,
             "scope": self.scope,
             "requires_approval": self.requires_approval,
+            "approval_role": self.approval_role,
             "context_params": self.context_params,
             "manager_description": self.manager_description,
             "available": self.is_available(),
@@ -131,7 +136,8 @@ class Catalog:
                 name=r["name"],
                 provider=r.get("provider", "local"),
                 scope=r.get("scope", "business"),
-                requires_approval=bool(r.get("requires_approval", False)),
+                requires_approval=bool(r.get("requires_approval", False)) or bool(r.get("approval_role")),
+                approval_role=str(r.get("approval_role") or ("bql" if r.get("requires_approval") else "")),
                 context_params=list(r.get("context_params") or []),
                 manager_description=r.get("manager_description", ""),
             )

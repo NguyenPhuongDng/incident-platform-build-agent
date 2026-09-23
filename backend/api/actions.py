@@ -40,6 +40,7 @@ def _to_dict(a: Action) -> dict[str, Any]:
         "tool": a.tool,
         "args": dict(a.args or {}),
         "status": a.status,
+        "vai_tro_duyet": a.approver_role or "bql",
         "result": dict(a.result or {}),
         "created_at": a.created_at.isoformat(),
         "decided_at": a.decided_at.isoformat() if a.decided_at else None,
@@ -49,11 +50,20 @@ def _to_dict(a: Action) -> dict[str, Any]:
 
 
 @router.get("")
-def list_actions(status: str | None = "cho_duyet") -> list[dict[str, Any]]:
+def list_actions(status: str | None = "cho_duyet", role: str | None = None,
+                 ticket_id: str | None = None) -> list[dict[str, Any]]:
+    """`role` lọc theo hàng đợi người duyệt (cu_dan | bql | don_vi ...).
+
+    Mỗi bên duyệt chỉ nhìn thấy phần việc của mình: giao diện BQL không được phép
+    bấm thay cư dân, và ngược lại."""
     with session_scope() as s:
         stmt = select(Action).order_by(Action.created_at.desc())
         if status:
             stmt = stmt.where(Action.status == status)
+        if role:
+            stmt = stmt.where(Action.approver_role == role)
+        if ticket_id:
+            stmt = stmt.where(Action.ticket_id == ticket_id)
         return [_to_dict(a) for a in s.exec(stmt).all()]
 
 

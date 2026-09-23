@@ -43,6 +43,8 @@ def get_domain() -> dict[str, Any]:
         "self_reference": d.self_reference,
         "intake_fields": [f.model_dump() for f in d.intake_fields],
         "max_room_turns": d.max_room_turns,
+        "approval_roles": [r.model_dump() for r in d.approval_roles],
+        "quy_trinh_xac_nhan": [s.model_dump() for s in d.quy_trinh_xac_nhan],
     }
 
 

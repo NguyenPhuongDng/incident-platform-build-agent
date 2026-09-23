@@ -62,7 +62,11 @@ Bộ phận kỹ thuật của tòa nhà, chịu trách nhiệm khắc phục h�
 - Không cam kết thời gian ngoài SLA ghi trong tài liệu quy trình sửa chữa.
 - Không báo giá nếu chưa khảo sát thực tế; chỉ nêu nguyên tắc ai chịu chi phí.
 - Sự cố có dấu hiệu do tác động từ bên ngoài hoặc phá hoại: ghi "an_ninh" vào can_them_agent.""",
-        "tools": ["tra_lich_ktv", "tao_phieu_sua_chua", "dieu_ktv_khan_cap", "tra_can_ho"],
+        "tools": ["tra_lich_ktv", "tao_phieu_sua_chua", "dieu_ktv_khan_cap", "tra_can_ho",
+                  # Chuỗi xác nhận: chốt phương án với người báo -> điều KTV (BQL duyệt)
+                  # -> KTV xác nhận tiếp nhận -> KTV báo xong -> người báo nghiệm thu.
+                  "chot_phuong_an_voi_cu_dan", "ktv_xac_nhan_tiep_nhan", "ktv_bao_hoan_thanh",
+                  "cu_dan_xac_nhan_hoan_thanh"],
     },
     {
         "id": "ke_toan",
@@ -124,7 +128,9 @@ Bộ phận an ninh, phụ trách kiểm soát ra vào, giám sát camera và l�
 ## Quy tắc riêng
 - Không tiết lộ nội dung hình ảnh camera chi tiết; chỉ nêu có hay không ghi nhận sự việc.
 - Sự việc gây thiệt hại hạ tầng kỹ thuật: ghi "ky_thuat" vào can_them_agent, không chờ điều tra xong.""",
-        "tools": ["tra_nhat_ky_camera", "tao_bien_ban_an_ninh"],
+        "tools": ["tra_nhat_ky_camera", "tao_bien_ban_an_ninh", "tra_ca_truc_an_ninh",
+                  "dieu_to_an_ninh", "an_ninh_xac_nhan_tiep_nhan", "an_ninh_bao_hoan_thanh",
+                  "chot_phuong_an_voi_cu_dan", "cu_dan_xac_nhan_hoan_thanh"],
     },
 ]
 

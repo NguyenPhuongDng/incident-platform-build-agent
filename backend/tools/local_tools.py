@@ -276,3 +276,47 @@ def tra_lich_thu_gom_rac(a: LichRacArgs) -> dict:
         "diem_tap_ket": [r for r in data["diem_tap_ket"] if kw in r["khu_vuc"].lower()],
         "to_ve_sinh": [r for r in data["to_ve_sinh"] if kw in r["phu_trach"].lower()],
     }
+
+
+# --------------------------------------------------------------------------- chuỗi xác nhận
+# Hai tool dưới đây là phần việc của NGƯỜI BÁO trong quy trình: chốt phương án
+# trước khi làm, và nghiệm thu sau khi làm xong. Chúng không tự chạy — trong
+# `catalog.yaml` cả hai khai `approval_role: cu_dan`, nên ToolExecutor dừng lượt
+# của agent lại và chờ chính người báo bấm đồng ý ở giao diện cư dân.
+
+
+class ChotPhuongAnArgs(BaseModel):
+    ticket_id: str = Field(description="Mã phản ánh (hệ thống tự điền)")
+    phuong_an: str = Field(description="Phương án xử lý đề xuất, viết cho người báo đọc")
+    chi_phi_du_kien: float = Field(default=0, description="Chi phí dự kiến người báo phải trả, 0 nếu miễn phí")
+    thoi_gian_du_kien: str = Field(default="", description="Thời gian dự kiến xử lý, ví dụ 'trong 24 giờ'")
+    sandbox: bool = Field(default=False, description="Hệ thống tự điền: true khi đang chạy thử/đánh giá")
+
+
+@tool("chot_phuong_an_voi_cu_dan", ChotPhuongAnArgs)
+def chot_phuong_an_voi_cu_dan(a: ChotPhuongAnArgs) -> dict:
+    code = _new_code("PA", sandbox=a.sandbox)
+    payload = a.model_dump(exclude={"sandbox"})
+    _save_record("chot_phuong_an", code, payload, sandbox=a.sandbox)
+    return {"ma_phuong_an": code, "trang_thai": "cu_dan_da_dong_y", **payload}
+
+
+class NghiemThuArgs(BaseModel):
+    ticket_id: str = Field(description="Mã phản ánh (hệ thống tự điền)")
+    noi_dung_da_xu_ly: str = Field(description="Tóm tắt việc đã làm để người báo đối chiếu")
+    sandbox: bool = Field(default=False, description="Hệ thống tự điền: true khi đang chạy thử/đánh giá")
+
+
+@tool("cu_dan_xac_nhan_hoan_thanh", NghiemThuArgs)
+def cu_dan_xac_nhan_hoan_thanh(a: NghiemThuArgs) -> dict:
+    code = _new_code("NT", sandbox=a.sandbox)
+    payload = a.model_dump(exclude={"sandbox"})
+    _save_record("nghiem_thu", code, payload, sandbox=a.sandbox)
+    if not a.sandbox:
+        with session_scope() as s:
+            t = s.get(Ticket, a.ticket_id)
+            if t:
+                t.status = "hoan_tat"
+                t.updated_at = datetime.utcnow()
+                s.add(t)
+    return {"ma_nghiem_thu": code, "trang_thai": "cu_dan_da_nghiem_thu", **payload}

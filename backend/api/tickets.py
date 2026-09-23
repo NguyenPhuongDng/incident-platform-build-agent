@@ -12,6 +12,7 @@ from sqlmodel import select
 from backend.app.db import session_scope
 from backend.app.events import bus, load_events, sse_format
 from backend.app.models import ChatMessage, Ticket
+from backend.core import workflow
 from backend.core.receptionist import ticket_to_dict
 
 router = APIRouter(prefix="/api", tags=["tickets"])
@@ -52,6 +53,18 @@ def get_ticket(ticket_id: str) -> dict[str, Any]:
             {"role": m.role, "content": m.content, "created_at": m.created_at.isoformat()} for m in msgs
         ]
     return ticket
+
+
+@router.get("/tickets/{ticket_id}/workflow")
+def get_workflow(ticket_id: str) -> dict[str, Any]:
+    """Quy trình xác nhận của phản ánh: bước nào xong, bước nào đang chờ ai."""
+    state = workflow.chain_state(ticket_id)
+    return {
+        "ticket_id": ticket_id,
+        "da_bat_dau": workflow.started(state),
+        "con_thieu": [s["id"] for s in workflow.unfinished(state)] if workflow.started(state) else [],
+        "cac_buoc": state,
+    }
 
 
 @router.get("/tickets/{ticket_id}/events")

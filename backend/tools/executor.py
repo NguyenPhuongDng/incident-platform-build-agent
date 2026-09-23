@@ -177,6 +177,7 @@ class ToolExecutor:
                     tool=spec.name,
                     args=args,
                     status="cho_duyet",
+                    approver_role=spec.approval_role or "bql",
                 )
             )
         blocking = bool(ctx.wait_for_approval and settings.hitl_wait_for_approval and ctx.ticket_id)
@@ -187,6 +188,7 @@ class ToolExecutor:
                 "action_id": action_id,
                 "tool": spec.name,
                 "args": args,
+                "vai_tro_duyet": spec.approval_role or "bql",
                 "phong_hop_dang_cho": blocking,
                 "han_cho_giay": settings.hitl_approval_timeout if blocking else 0,
             },
@@ -217,8 +219,9 @@ class ToolExecutor:
                 "action_id": action_id,
                 "tool": spec.name,
                 "args": args,
+                "vai_tro_duyet": spec.approval_role or "bql",
                 "han_cho_giay": timeout,
-                "ghi_chu": f"Phòng họp tạm dừng, chờ quản lý duyệt '{spec.name}'",
+                "ghi_chu": f"Phòng họp tạm dừng, chờ '{spec.approval_role or 'bql'}' duyệt '{spec.name}'",
             },
         )
         logger.info("phòng họp ticket=%s dừng chờ duyệt action=%s (tối đa %ss)",
@@ -235,14 +238,15 @@ class ToolExecutor:
                     "trang_thai_duyet": "da_duyet",
                     "action_id": action_id,
                     "ket_qua": result,
-                    "ghi_chu": "Quản lý đã duyệt, hành động ĐÃ được thực thi. Hãy dùng dữ liệu trong 'ket_qua'.",
+                    "ghi_chu": f"Bên duyệt ('{spec.approval_role or 'bql'}') đã đồng ý, hành động ĐÃ được "
+                               f"thực thi. Hãy dùng dữ liệu trong 'ket_qua'.",
                 }
             elif decision == "tu_choi":
                 out = {
                     "trang_thai_duyet": "tu_choi",
                     "action_id": action_id,
-                    "ghi_chu": "Quản lý TỪ CHỐI hành động này; nó KHÔNG được thực hiện. "
-                               "Hãy nêu phương án thay thế hoặc kết luận rõ là việc này chưa được duyệt.",
+                    "ghi_chu": f"Bên duyệt ('{spec.approval_role or 'bql'}') TỪ CHỐI hành động này; nó KHÔNG "
+                               f"được thực hiện. Hãy nêu phương án thay thế hoặc kết luận rõ là việc này bị từ chối.",
                 }
             else:
                 _mark_timed_out(action_id)
@@ -265,7 +269,7 @@ class ToolExecutor:
             gate.abandon(action_id)
 
         waited = int(time.monotonic() - started)
-        _set_ticket_status(ctx.ticket_id, "dang_xu_ly")
+        _set_ticket_status(ctx.ticket_id, "dang_xu_ly", only_if="cho_duyet")
         self._emit(
             ctx,
             "room_resumed",
@@ -318,14 +322,19 @@ class ToolExecutor:
         return result
 
 
-def _set_ticket_status(ticket_id: str, status: str) -> None:
+def _set_ticket_status(ticket_id: str, status: str, *, only_if: str | None = None) -> None:
     """Phản ánh trạng thái chờ ra ngoài giao diện ngay lúc phòng họp dừng, thay vì
-    chỉ khi phiên kết thúc. Phòng họp tự tính lại trạng thái cuối khi đóng phiên."""
+    chỉ khi phiên kết thúc. Phòng họp tự tính lại trạng thái cuối khi đóng phiên.
+
+    `only_if` để lúc họp tiếp không ghi đè trạng thái do CHÍNH tool vừa duyệt đặt:
+    `cu_dan_xac_nhan_hoan_thanh` chuyển phản ánh sang `hoan_tat`, mà bản đầu tiên
+    của hàm này đặt lại `dang_xu_ly` ngay sau đó — nghiệm thu xong vé vẫn "đang xử lý".
+    """
     if not ticket_id:
         return
     with session_scope() as s:
         t = s.get(Ticket, ticket_id)
-        if t and t.status != status:
+        if t and t.status != status and (only_if is None or t.status == only_if):
             t.status = status
             t.updated_at = datetime.utcnow()
             s.add(t)

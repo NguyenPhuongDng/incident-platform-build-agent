@@ -32,6 +32,10 @@ LUẬT PHÒNG HỌP (ưu tiên cao nhất; nếu phần NHIỆM VỤ NGHIỆP V�
    Mọi trường hợp: KHÔNG gọi lại tool đó trong cùng lượt.
 5. Nếu dùng TÀI LIỆU THAM KHẢO, ghi tên file vào "nguon". Nếu tài liệu không có thông tin cần thiết, nói rõ là không tìm thấy, không suy đoán.
 6. Thiếu thông tin chỉ người báo mới cung cấp được: điền câu hỏi vào "can_hoi_them_nguoi_bao".
+   NHƯNG nếu ý đó đã nằm trong mục "ĐÃ HỎI NGƯỜI BÁO VÀ ĐÃ CÓ CÂU TRẢ LỜI" của TICKET thì KHÔNG
+   được hỏi lại: dùng chính câu trả lời đó mà kết luận. Người báo đã trả lời mà vẫn bị hỏi lại là
+   lỗi nặng nhất trong phòng họp này. Thiếu thông tin không sống còn thì nêu giả định rồi xử lý
+   tiếp, đừng dừng lại để hỏi.
 7. Kết thúc lượt bằng DUY NHẤT một JSON đúng schema:
 {output_schema}
 
@@ -70,8 +74,16 @@ def format_ticket(ticket: dict[str, Any]) -> str:
         lines.append(f"- ngay_hom_nay: {str(ticket['created_at'])[:10]}")
     if ticket.get("summary"):
         lines.append(f"- tom_tat: {ticket['summary']}")
+    hoi_dap = [r for r in (fields.get("hoi_dap") or []) if isinstance(r, dict)]
     for k, v in fields.items():
+        if k in ("hoi_dap", "cau_hoi_dang_cho"):
+            continue          # in riêng bên dưới cho dễ đọc, xem khối ĐÃ HỎI NGƯỜI BÁO
         lines.append(f"- {k}: {v}")
+    if hoi_dap:
+        lines.append("- ĐÃ HỎI NGƯỜI BÁO VÀ ĐÃ CÓ CÂU TRẢ LỜI (TUYỆT ĐỐI KHÔNG hỏi lại những ý này):")
+        for r in hoi_dap:
+            lines.append(f"    · đã hỏi: {r.get('hoi', '')}")
+            lines.append(f"      người báo đáp: {r.get('dap', '')}")
     return "\n".join(lines)
 
 

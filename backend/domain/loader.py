@@ -22,6 +22,22 @@ class IntakeField(BaseModel):
     required: bool = False
 
 
+class ApprovalRole(BaseModel):
+    """Một hàng đợi duyệt. `hien_o` chỉ là gợi ý cho giao diện, không phải phân quyền."""
+
+    id: str
+    label: str
+    mo_ta: str = ""
+    hien_o: str = "console"          # console | resident
+
+
+class ConfirmStep(BaseModel):
+    id: str
+    label: str
+    vai_tro: str
+    tools: list[str] = Field(default_factory=list)
+
+
 class DomainPack(BaseModel):
     id: str
     display_name: str
@@ -31,6 +47,8 @@ class DomainPack(BaseModel):
     intake_fields: list[IntakeField] = Field(default_factory=list)
     priority_rules: str = ""
     max_room_turns: int = 8
+    approval_roles: list[ApprovalRole] = Field(default_factory=list)
+    quy_trinh_xac_nhan: list[ConfirmStep] = Field(default_factory=list)
 
     def intake_spec(self) -> str:
         lines = []
@@ -41,6 +59,16 @@ class DomainPack(BaseModel):
 
     def required_keys(self) -> list[str]:
         return [f.key for f in self.intake_fields if f.required]
+
+    def role(self, role_id: str) -> ApprovalRole | None:
+        return next((r for r in self.approval_roles if r.id == role_id), None)
+
+    def role_label(self, role_id: str) -> str:
+        r = self.role(role_id)
+        return r.label if r else role_id
+
+    def step_for_tool(self, tool_name: str) -> ConfirmStep | None:
+        return next((s for s in self.quy_trinh_xac_nhan if tool_name in s.tools), None)
 
 
 @lru_cache(maxsize=8)
