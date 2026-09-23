@@ -1,0 +1,15 @@
+id: vinhomes
+display_name: "Ban quản lý tòa nhà Vinhomes"
+audience: "cư dân"
+honorific: "anh/chị"
+self_reference: "Ban quản lý"
+intake_fields:
+  - {key: mo_ta, label: "Mô tả vấn đề", required: true}
+  # Nhãn cũ ("vị trí cụ thể… ở đâu") khiến Lễ tân đi hỏi chỗ đứng của thiết bị trong
+  # phòng. Chỉ cần phân biệt: sự cố trong căn hộ người báo (hệ thống đã biết mã căn hộ)
+  # hay ở khu vực chung — khu vực chung mới cần nói rõ chỗ nào.
+  - {key: vi_tri, label: "Sự cố ở trong căn hộ của người báo, hay ở khu vực chung (nếu khu vực chung thì chỗ nào)", required: true}
+  - {key: muc_do, label: "Mức độ ảnh hưởng / có khẩn cấp không", required: false}
+  - {key: khung_gio, label: "Khung giờ thuận tiện để xử lý", required: false}
+priority_rules: "Rò nước lớn, chập điện, kẹt thang máy, cháy nổ, mất an ninh: KHẨN CẤP. Hỏng hóc thông thường: BÌNH THƯỜNG. Thắc mắc, hỏi thông tin: THẤP."
+max_room_turns: 8

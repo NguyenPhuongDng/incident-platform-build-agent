@@ -1,0 +1,7 @@
+[
+  {"ma_can_ho": "S1-1203", "toa": "S1", "tang": 12, "dien_tich_m2": 78.5, "so_phong_ngu": 2, "huong": "Đông Nam", "tinh_trang": "Đang ở", "so_xe_o_to": 1, "so_xe_may": 2},
+  {"ma_can_ho": "S2-0805", "toa": "S2", "tang": 8, "dien_tich_m2": 54.0, "so_phong_ngu": 1, "huong": "Tây Bắc", "tinh_trang": "Đang ở", "so_xe_o_to": 0, "so_xe_may": 2},
+  {"ma_can_ho": "S1-1805", "toa": "S1", "tang": 18, "dien_tich_m2": 102.3, "so_phong_ngu": 3, "huong": "Đông", "tinh_trang": "Đang ở", "so_xe_o_to": 1, "so_xe_may": 3},
+  {"ma_can_ho": "S3-0402", "toa": "S3", "tang": 4, "dien_tich_m2": 66.0, "so_phong_ngu": 2, "huong": "Nam", "tinh_trang": "Cho thuê", "so_xe_o_to": 0, "so_xe_may": 1},
+  {"ma_can_ho": "S2-1501", "toa": "S2", "tang": 15, "dien_tich_m2": 88.0, "so_phong_ngu": 2, "huong": "Bắc", "tinh_trang": "Đang ở", "so_xe_o_to": 1, "so_xe_may": 2}
+]

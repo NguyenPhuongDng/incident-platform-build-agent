@@ -1,0 +1,19 @@
+# Môi trường và bí mật
+.venv/
+.env
+
+# Dữ liệu chạy thật: DB, vector store, trace hội thoại, bản sao lưu
+data/
+data_dev/
+backups/
+*.db
+*.db-journal
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Hệ điều hành / editor
+.DS_Store
+*.swp

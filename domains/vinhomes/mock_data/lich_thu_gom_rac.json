@@ -1,0 +1,62 @@
+{
+ "khung_gio_thu_gom": [
+  {
+   "khu_vuc": "Tòa S1",
+   "ca": "Sáng",
+   "gio": "06:00-08:00",
+   "tan_suat": "Hằng ngày"
+  },
+  {
+   "khu_vuc": "Tòa S1",
+   "ca": "Chiều",
+   "gio": "16:00-18:00",
+   "tan_suat": "Hằng ngày"
+  },
+  {
+   "khu_vuc": "Tòa S2",
+   "ca": "Sáng",
+   "gio": "06:30-08:30",
+   "tan_suat": "Hằng ngày"
+  },
+  {
+   "khu_vuc": "Tòa S3",
+   "ca": "Sáng",
+   "gio": "07:00-09:00",
+   "tan_suat": "Hằng ngày"
+  },
+  {
+   "khu_vuc": "Rác cồng kềnh (toàn khu)",
+   "ca": "Sáng",
+   "gio": "08:00-11:00",
+   "tan_suat": "Thứ 7 hằng tuần"
+  }
+ ],
+ "diem_tap_ket": [
+  {
+   "khu_vuc": "Tòa S1",
+   "vi_tri": "Phòng rác tầng hầm B1, cửa số 3"
+  },
+  {
+   "khu_vuc": "Tòa S2",
+   "vi_tri": "Phòng rác tầng hầm B1, cửa số 7"
+  },
+  {
+   "khu_vuc": "Tòa S3",
+   "vi_tri": "Khu tập kết ngoài trời cạnh cổng phụ"
+  }
+ ],
+ "to_ve_sinh": [
+  {
+   "ma_to": "VS-A",
+   "phu_trach": "Tòa S1",
+   "so_nhan_vien": 4,
+   "ca_truc": "06:00-18:00"
+  },
+  {
+   "ma_to": "VS-B",
+   "phu_trach": "Tòa S2 và S3",
+   "so_nhan_vien": 5,
+   "ca_truc": "06:00-18:00"
+  }
+ ]
+}

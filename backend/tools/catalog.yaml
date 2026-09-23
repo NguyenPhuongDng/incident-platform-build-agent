@@ -1,0 +1,109 @@
+# Catalog tool của platform.
+# input_schema KHÔNG khai báo ở đây: tool local lấy schema từ Pydantic model,
+# tool MCP lấy schema từ list_tools của server.
+# context_params sẽ bị ẩn khỏi schema gửi cho LLM và do executor tự điền.
+
+- name: cap_nhat_trang_thai_ticket
+  provider: local
+  scope: platform
+  requires_approval: false
+  context_params: [ticket_id]
+  manager_description: "Cập nhật trạng thái xử lý của phản ánh đang làm việc"
+
+- name: gui_thong_bao_noi_bo
+  provider: local
+  scope: platform
+  requires_approval: false
+  context_params: [ticket_id]
+  manager_description: "Gửi thông báo nội bộ cho một bộ phận khác trong tổ chức"
+
+- name: tra_thong_tin_cu_dan
+  provider: local
+  scope: domain
+  requires_approval: false
+  context_params: [ma_cu_dan]
+  manager_description: "Xem hồ sơ của người gửi phản ánh"
+
+- name: tra_can_ho
+  provider: local
+  scope: domain
+  requires_approval: false
+  context_params: [ma_can_ho]
+  manager_description: "Xem thông tin căn hộ của người gửi phản ánh (diện tích, tầng, tòa)"
+
+- name: tra_phi_dich_vu
+  provider: local
+  scope: domain
+  requires_approval: false
+  context_params: [ma_can_ho]
+  manager_description: "Xem chi tiết phí dịch vụ theo tháng của căn hộ người gửi phản ánh"
+
+- name: tra_lich_ktv
+  provider: mcp:ky_thuat
+  scope: business
+  requires_approval: false
+  context_params: []
+  manager_description: "Xem lịch trống của kỹ thuật viên theo ngày và chuyên môn"
+
+- name: tao_phieu_sua_chua
+  provider: mcp:ky_thuat
+  scope: business
+  requires_approval: false
+  context_params: [ma_can_ho]
+  manager_description: "Tạo phiếu sửa chữa cho căn hộ của người báo"
+
+- name: dieu_ktv_khan_cap
+  provider: mcp:ky_thuat
+  scope: business
+  requires_approval: true
+  context_params: [ma_can_ho]
+  manager_description: "Điều kỹ thuật viên đi xử lý khẩn cấp ngoài lịch (cần quản lý duyệt)"
+
+- name: tra_cong_no
+  provider: local
+  scope: business
+  requires_approval: false
+  context_params: [ma_can_ho]
+  manager_description: "Xem công nợ và lịch sử thanh toán của căn hộ người báo"
+
+- name: mien_giam_phi
+  provider: local
+  scope: business
+  requires_approval: true
+  context_params: [ma_can_ho]
+  manager_description: "Đề xuất miễn giảm một khoản phí cho căn hộ người báo (cần quản lý duyệt)"
+
+- name: lap_bao_gia_sua_chua
+  provider: local
+  scope: business
+  requires_approval: false
+  context_params: [ticket_id]
+  manager_description: "Lập báo giá sửa chữa (dự kiến hoặc giá chốt): tự cộng vật tư, nhân công và tra ngưỡng phê duyệt"
+
+- name: tra_nhat_ky_camera
+  provider: local
+  scope: business
+  requires_approval: false
+  context_params: []
+  manager_description: "Tra nhật ký ghi hình camera theo khu vực và ngày"
+
+- name: tao_bien_ban_an_ninh
+  provider: local
+  scope: business
+  requires_approval: false
+  context_params: [ticket_id]
+  manager_description: "Lập biên bản sự việc an ninh"
+
+- name: tao_yeu_cau_ve_sinh
+  provider: local
+  scope: business
+  requires_approval: false
+  context_params: [ticket_id]
+  manager_description: "Tạo yêu cầu dọn vệ sinh cho một khu vực"
+
+- name: tra_lich_thu_gom_rac
+  provider: local
+  scope: business
+  requires_approval: false
+  context_params: []
+  manager_description: "Xem lịch thu gom rác, điểm tập kết và tổ vệ sinh phụ trách"

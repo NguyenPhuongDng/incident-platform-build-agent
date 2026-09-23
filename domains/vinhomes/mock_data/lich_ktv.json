@@ -1,0 +1,1431 @@
+{
+ "ky_thuat_vien": [
+  {
+   "ma_ktv": "KTV01",
+   "ho_ten": "Đỗ Văn Thành",
+   "chuyen_mon": "dien_nuoc"
+  },
+  {
+   "ma_ktv": "KTV02",
+   "ho_ten": "Bùi Xuân Nam",
+   "chuyen_mon": "dien_nuoc"
+  },
+  {
+   "ma_ktv": "KTV03",
+   "ho_ten": "Hoàng Anh Tuấn",
+   "chuyen_mon": "dieu_hoa"
+  },
+  {
+   "ma_ktv": "KTV04",
+   "ho_ten": "Ngô Thị Hà",
+   "chuyen_mon": "thang_may"
+  },
+  {
+   "ma_ktv": "KTV05",
+   "ho_ten": "Lý Trọng Nghĩa",
+   "chuyen_mon": "dien_nuoc"
+  }
+ ],
+ "lich": [
+  {
+   "ngay": "2026-09-21",
+   "ma_ktv": "KTV01",
+   "ho_ten": "Đỗ Văn Thành",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "08:00-10:00",
+   "trang_thai": "da_dat"
+  },
+  {
+   "ngay": "2026-09-21",
+   "ma_ktv": "KTV01",
+   "ho_ten": "Đỗ Văn Thành",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "10:00-12:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-21",
+   "ma_ktv": "KTV01",
+   "ho_ten": "Đỗ Văn Thành",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "13:30-15:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-21",
+   "ma_ktv": "KTV01",
+   "ho_ten": "Đỗ Văn Thành",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "15:30-17:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-21",
+   "ma_ktv": "KTV01",
+   "ho_ten": "Đỗ Văn Thành",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "19:00-21:00",
+   "trang_thai": "da_dat"
+  },
+  {
+   "ngay": "2026-09-21",
+   "ma_ktv": "KTV02",
+   "ho_ten": "Bùi Xuân Nam",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "08:00-10:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-21",
+   "ma_ktv": "KTV02",
+   "ho_ten": "Bùi Xuân Nam",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "10:00-12:00",
+   "trang_thai": "da_dat"
+  },
+  {
+   "ngay": "2026-09-21",
+   "ma_ktv": "KTV02",
+   "ho_ten": "Bùi Xuân Nam",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "13:30-15:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-21",
+   "ma_ktv": "KTV02",
+   "ho_ten": "Bùi Xuân Nam",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "15:30-17:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-21",
+   "ma_ktv": "KTV02",
+   "ho_ten": "Bùi Xuân Nam",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "19:00-21:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-21",
+   "ma_ktv": "KTV03",
+   "ho_ten": "Hoàng Anh Tuấn",
+   "chuyen_mon": "dieu_hoa",
+   "khung_gio": "08:00-10:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-21",
+   "ma_ktv": "KTV03",
+   "ho_ten": "Hoàng Anh Tuấn",
+   "chuyen_mon": "dieu_hoa",
+   "khung_gio": "10:00-12:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-21",
+   "ma_ktv": "KTV03",
+   "ho_ten": "Hoàng Anh Tuấn",
+   "chuyen_mon": "dieu_hoa",
+   "khung_gio": "13:30-15:30",
+   "trang_thai": "da_dat"
+  },
+  {
+   "ngay": "2026-09-21",
+   "ma_ktv": "KTV03",
+   "ho_ten": "Hoàng Anh Tuấn",
+   "chuyen_mon": "dieu_hoa",
+   "khung_gio": "15:30-17:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-21",
+   "ma_ktv": "KTV03",
+   "ho_ten": "Hoàng Anh Tuấn",
+   "chuyen_mon": "dieu_hoa",
+   "khung_gio": "19:00-21:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-21",
+   "ma_ktv": "KTV04",
+   "ho_ten": "Ngô Thị Hà",
+   "chuyen_mon": "thang_may",
+   "khung_gio": "08:00-10:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-21",
+   "ma_ktv": "KTV04",
+   "ho_ten": "Ngô Thị Hà",
+   "chuyen_mon": "thang_may",
+   "khung_gio": "10:00-12:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-21",
+   "ma_ktv": "KTV04",
+   "ho_ten": "Ngô Thị Hà",
+   "chuyen_mon": "thang_may",
+   "khung_gio": "13:30-15:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-21",
+   "ma_ktv": "KTV04",
+   "ho_ten": "Ngô Thị Hà",
+   "chuyen_mon": "thang_may",
+   "khung_gio": "15:30-17:30",
+   "trang_thai": "da_dat"
+  },
+  {
+   "ngay": "2026-09-21",
+   "ma_ktv": "KTV04",
+   "ho_ten": "Ngô Thị Hà",
+   "chuyen_mon": "thang_may",
+   "khung_gio": "19:00-21:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-21",
+   "ma_ktv": "KTV05",
+   "ho_ten": "Lý Trọng Nghĩa",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "08:00-10:00",
+   "trang_thai": "da_dat"
+  },
+  {
+   "ngay": "2026-09-21",
+   "ma_ktv": "KTV05",
+   "ho_ten": "Lý Trọng Nghĩa",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "10:00-12:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-21",
+   "ma_ktv": "KTV05",
+   "ho_ten": "Lý Trọng Nghĩa",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "13:30-15:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-21",
+   "ma_ktv": "KTV05",
+   "ho_ten": "Lý Trọng Nghĩa",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "15:30-17:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-21",
+   "ma_ktv": "KTV05",
+   "ho_ten": "Lý Trọng Nghĩa",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "19:00-21:00",
+   "trang_thai": "da_dat"
+  },
+  {
+   "ngay": "2026-09-22",
+   "ma_ktv": "KTV01",
+   "ho_ten": "Đỗ Văn Thành",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "08:00-10:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-22",
+   "ma_ktv": "KTV01",
+   "ho_ten": "Đỗ Văn Thành",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "10:00-12:00",
+   "trang_thai": "da_dat"
+  },
+  {
+   "ngay": "2026-09-22",
+   "ma_ktv": "KTV01",
+   "ho_ten": "Đỗ Văn Thành",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "13:30-15:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-22",
+   "ma_ktv": "KTV01",
+   "ho_ten": "Đỗ Văn Thành",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "15:30-17:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-22",
+   "ma_ktv": "KTV01",
+   "ho_ten": "Đỗ Văn Thành",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "19:00-21:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-22",
+   "ma_ktv": "KTV02",
+   "ho_ten": "Bùi Xuân Nam",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "08:00-10:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-22",
+   "ma_ktv": "KTV02",
+   "ho_ten": "Bùi Xuân Nam",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "10:00-12:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-22",
+   "ma_ktv": "KTV02",
+   "ho_ten": "Bùi Xuân Nam",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "13:30-15:30",
+   "trang_thai": "da_dat"
+  },
+  {
+   "ngay": "2026-09-22",
+   "ma_ktv": "KTV02",
+   "ho_ten": "Bùi Xuân Nam",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "15:30-17:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-22",
+   "ma_ktv": "KTV02",
+   "ho_ten": "Bùi Xuân Nam",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "19:00-21:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-22",
+   "ma_ktv": "KTV03",
+   "ho_ten": "Hoàng Anh Tuấn",
+   "chuyen_mon": "dieu_hoa",
+   "khung_gio": "08:00-10:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-22",
+   "ma_ktv": "KTV03",
+   "ho_ten": "Hoàng Anh Tuấn",
+   "chuyen_mon": "dieu_hoa",
+   "khung_gio": "10:00-12:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-22",
+   "ma_ktv": "KTV03",
+   "ho_ten": "Hoàng Anh Tuấn",
+   "chuyen_mon": "dieu_hoa",
+   "khung_gio": "13:30-15:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-22",
+   "ma_ktv": "KTV03",
+   "ho_ten": "Hoàng Anh Tuấn",
+   "chuyen_mon": "dieu_hoa",
+   "khung_gio": "15:30-17:30",
+   "trang_thai": "da_dat"
+  },
+  {
+   "ngay": "2026-09-22",
+   "ma_ktv": "KTV03",
+   "ho_ten": "Hoàng Anh Tuấn",
+   "chuyen_mon": "dieu_hoa",
+   "khung_gio": "19:00-21:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-22",
+   "ma_ktv": "KTV04",
+   "ho_ten": "Ngô Thị Hà",
+   "chuyen_mon": "thang_may",
+   "khung_gio": "08:00-10:00",
+   "trang_thai": "da_dat"
+  },
+  {
+   "ngay": "2026-09-22",
+   "ma_ktv": "KTV04",
+   "ho_ten": "Ngô Thị Hà",
+   "chuyen_mon": "thang_may",
+   "khung_gio": "10:00-12:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-22",
+   "ma_ktv": "KTV04",
+   "ho_ten": "Ngô Thị Hà",
+   "chuyen_mon": "thang_may",
+   "khung_gio": "13:30-15:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-22",
+   "ma_ktv": "KTV04",
+   "ho_ten": "Ngô Thị Hà",
+   "chuyen_mon": "thang_may",
+   "khung_gio": "15:30-17:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-22",
+   "ma_ktv": "KTV04",
+   "ho_ten": "Ngô Thị Hà",
+   "chuyen_mon": "thang_may",
+   "khung_gio": "19:00-21:00",
+   "trang_thai": "da_dat"
+  },
+  {
+   "ngay": "2026-09-22",
+   "ma_ktv": "KTV05",
+   "ho_ten": "Lý Trọng Nghĩa",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "08:00-10:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-22",
+   "ma_ktv": "KTV05",
+   "ho_ten": "Lý Trọng Nghĩa",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "10:00-12:00",
+   "trang_thai": "da_dat"
+  },
+  {
+   "ngay": "2026-09-22",
+   "ma_ktv": "KTV05",
+   "ho_ten": "Lý Trọng Nghĩa",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "13:30-15:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-22",
+   "ma_ktv": "KTV05",
+   "ho_ten": "Lý Trọng Nghĩa",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "15:30-17:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-22",
+   "ma_ktv": "KTV05",
+   "ho_ten": "Lý Trọng Nghĩa",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "19:00-21:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-23",
+   "ma_ktv": "KTV01",
+   "ho_ten": "Đỗ Văn Thành",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "08:00-10:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-23",
+   "ma_ktv": "KTV01",
+   "ho_ten": "Đỗ Văn Thành",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "10:00-12:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-23",
+   "ma_ktv": "KTV01",
+   "ho_ten": "Đỗ Văn Thành",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "13:30-15:30",
+   "trang_thai": "da_dat"
+  },
+  {
+   "ngay": "2026-09-23",
+   "ma_ktv": "KTV01",
+   "ho_ten": "Đỗ Văn Thành",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "15:30-17:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-23",
+   "ma_ktv": "KTV01",
+   "ho_ten": "Đỗ Văn Thành",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "19:00-21:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-23",
+   "ma_ktv": "KTV02",
+   "ho_ten": "Bùi Xuân Nam",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "08:00-10:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-23",
+   "ma_ktv": "KTV02",
+   "ho_ten": "Bùi Xuân Nam",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "10:00-12:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-23",
+   "ma_ktv": "KTV02",
+   "ho_ten": "Bùi Xuân Nam",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "13:30-15:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-23",
+   "ma_ktv": "KTV02",
+   "ho_ten": "Bùi Xuân Nam",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "15:30-17:30",
+   "trang_thai": "da_dat"
+  },
+  {
+   "ngay": "2026-09-23",
+   "ma_ktv": "KTV02",
+   "ho_ten": "Bùi Xuân Nam",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "19:00-21:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-23",
+   "ma_ktv": "KTV03",
+   "ho_ten": "Hoàng Anh Tuấn",
+   "chuyen_mon": "dieu_hoa",
+   "khung_gio": "08:00-10:00",
+   "trang_thai": "da_dat"
+  },
+  {
+   "ngay": "2026-09-23",
+   "ma_ktv": "KTV03",
+   "ho_ten": "Hoàng Anh Tuấn",
+   "chuyen_mon": "dieu_hoa",
+   "khung_gio": "10:00-12:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-23",
+   "ma_ktv": "KTV03",
+   "ho_ten": "Hoàng Anh Tuấn",
+   "chuyen_mon": "dieu_hoa",
+   "khung_gio": "13:30-15:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-23",
+   "ma_ktv": "KTV03",
+   "ho_ten": "Hoàng Anh Tuấn",
+   "chuyen_mon": "dieu_hoa",
+   "khung_gio": "15:30-17:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-23",
+   "ma_ktv": "KTV03",
+   "ho_ten": "Hoàng Anh Tuấn",
+   "chuyen_mon": "dieu_hoa",
+   "khung_gio": "19:00-21:00",
+   "trang_thai": "da_dat"
+  },
+  {
+   "ngay": "2026-09-23",
+   "ma_ktv": "KTV04",
+   "ho_ten": "Ngô Thị Hà",
+   "chuyen_mon": "thang_may",
+   "khung_gio": "08:00-10:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-23",
+   "ma_ktv": "KTV04",
+   "ho_ten": "Ngô Thị Hà",
+   "chuyen_mon": "thang_may",
+   "khung_gio": "10:00-12:00",
+   "trang_thai": "da_dat"
+  },
+  {
+   "ngay": "2026-09-23",
+   "ma_ktv": "KTV04",
+   "ho_ten": "Ngô Thị Hà",
+   "chuyen_mon": "thang_may",
+   "khung_gio": "13:30-15:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-23",
+   "ma_ktv": "KTV04",
+   "ho_ten": "Ngô Thị Hà",
+   "chuyen_mon": "thang_may",
+   "khung_gio": "15:30-17:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-23",
+   "ma_ktv": "KTV04",
+   "ho_ten": "Ngô Thị Hà",
+   "chuyen_mon": "thang_may",
+   "khung_gio": "19:00-21:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-23",
+   "ma_ktv": "KTV05",
+   "ho_ten": "Lý Trọng Nghĩa",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "08:00-10:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-23",
+   "ma_ktv": "KTV05",
+   "ho_ten": "Lý Trọng Nghĩa",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "10:00-12:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-23",
+   "ma_ktv": "KTV05",
+   "ho_ten": "Lý Trọng Nghĩa",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "13:30-15:30",
+   "trang_thai": "da_dat"
+  },
+  {
+   "ngay": "2026-09-23",
+   "ma_ktv": "KTV05",
+   "ho_ten": "Lý Trọng Nghĩa",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "15:30-17:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-23",
+   "ma_ktv": "KTV05",
+   "ho_ten": "Lý Trọng Nghĩa",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "19:00-21:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-24",
+   "ma_ktv": "KTV01",
+   "ho_ten": "Đỗ Văn Thành",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "08:00-10:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-24",
+   "ma_ktv": "KTV01",
+   "ho_ten": "Đỗ Văn Thành",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "10:00-12:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-24",
+   "ma_ktv": "KTV01",
+   "ho_ten": "Đỗ Văn Thành",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "13:30-15:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-24",
+   "ma_ktv": "KTV01",
+   "ho_ten": "Đỗ Văn Thành",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "15:30-17:30",
+   "trang_thai": "da_dat"
+  },
+  {
+   "ngay": "2026-09-24",
+   "ma_ktv": "KTV01",
+   "ho_ten": "Đỗ Văn Thành",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "19:00-21:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-24",
+   "ma_ktv": "KTV02",
+   "ho_ten": "Bùi Xuân Nam",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "08:00-10:00",
+   "trang_thai": "da_dat"
+  },
+  {
+   "ngay": "2026-09-24",
+   "ma_ktv": "KTV02",
+   "ho_ten": "Bùi Xuân Nam",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "10:00-12:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-24",
+   "ma_ktv": "KTV02",
+   "ho_ten": "Bùi Xuân Nam",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "13:30-15:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-24",
+   "ma_ktv": "KTV02",
+   "ho_ten": "Bùi Xuân Nam",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "15:30-17:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-24",
+   "ma_ktv": "KTV02",
+   "ho_ten": "Bùi Xuân Nam",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "19:00-21:00",
+   "trang_thai": "da_dat"
+  },
+  {
+   "ngay": "2026-09-24",
+   "ma_ktv": "KTV03",
+   "ho_ten": "Hoàng Anh Tuấn",
+   "chuyen_mon": "dieu_hoa",
+   "khung_gio": "08:00-10:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-24",
+   "ma_ktv": "KTV03",
+   "ho_ten": "Hoàng Anh Tuấn",
+   "chuyen_mon": "dieu_hoa",
+   "khung_gio": "10:00-12:00",
+   "trang_thai": "da_dat"
+  },
+  {
+   "ngay": "2026-09-24",
+   "ma_ktv": "KTV03",
+   "ho_ten": "Hoàng Anh Tuấn",
+   "chuyen_mon": "dieu_hoa",
+   "khung_gio": "13:30-15:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-24",
+   "ma_ktv": "KTV03",
+   "ho_ten": "Hoàng Anh Tuấn",
+   "chuyen_mon": "dieu_hoa",
+   "khung_gio": "15:30-17:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-24",
+   "ma_ktv": "KTV03",
+   "ho_ten": "Hoàng Anh Tuấn",
+   "chuyen_mon": "dieu_hoa",
+   "khung_gio": "19:00-21:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-24",
+   "ma_ktv": "KTV04",
+   "ho_ten": "Ngô Thị Hà",
+   "chuyen_mon": "thang_may",
+   "khung_gio": "08:00-10:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-24",
+   "ma_ktv": "KTV04",
+   "ho_ten": "Ngô Thị Hà",
+   "chuyen_mon": "thang_may",
+   "khung_gio": "10:00-12:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-24",
+   "ma_ktv": "KTV04",
+   "ho_ten": "Ngô Thị Hà",
+   "chuyen_mon": "thang_may",
+   "khung_gio": "13:30-15:30",
+   "trang_thai": "da_dat"
+  },
+  {
+   "ngay": "2026-09-24",
+   "ma_ktv": "KTV04",
+   "ho_ten": "Ngô Thị Hà",
+   "chuyen_mon": "thang_may",
+   "khung_gio": "15:30-17:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-24",
+   "ma_ktv": "KTV04",
+   "ho_ten": "Ngô Thị Hà",
+   "chuyen_mon": "thang_may",
+   "khung_gio": "19:00-21:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-24",
+   "ma_ktv": "KTV05",
+   "ho_ten": "Lý Trọng Nghĩa",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "08:00-10:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-24",
+   "ma_ktv": "KTV05",
+   "ho_ten": "Lý Trọng Nghĩa",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "10:00-12:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-24",
+   "ma_ktv": "KTV05",
+   "ho_ten": "Lý Trọng Nghĩa",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "13:30-15:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-24",
+   "ma_ktv": "KTV05",
+   "ho_ten": "Lý Trọng Nghĩa",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "15:30-17:30",
+   "trang_thai": "da_dat"
+  },
+  {
+   "ngay": "2026-09-24",
+   "ma_ktv": "KTV05",
+   "ho_ten": "Lý Trọng Nghĩa",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "19:00-21:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-25",
+   "ma_ktv": "KTV01",
+   "ho_ten": "Đỗ Văn Thành",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "08:00-10:00",
+   "trang_thai": "da_dat"
+  },
+  {
+   "ngay": "2026-09-25",
+   "ma_ktv": "KTV01",
+   "ho_ten": "Đỗ Văn Thành",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "10:00-12:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-25",
+   "ma_ktv": "KTV01",
+   "ho_ten": "Đỗ Văn Thành",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "13:30-15:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-25",
+   "ma_ktv": "KTV01",
+   "ho_ten": "Đỗ Văn Thành",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "15:30-17:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-25",
+   "ma_ktv": "KTV01",
+   "ho_ten": "Đỗ Văn Thành",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "19:00-21:00",
+   "trang_thai": "da_dat"
+  },
+  {
+   "ngay": "2026-09-25",
+   "ma_ktv": "KTV02",
+   "ho_ten": "Bùi Xuân Nam",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "08:00-10:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-25",
+   "ma_ktv": "KTV02",
+   "ho_ten": "Bùi Xuân Nam",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "10:00-12:00",
+   "trang_thai": "da_dat"
+  },
+  {
+   "ngay": "2026-09-25",
+   "ma_ktv": "KTV02",
+   "ho_ten": "Bùi Xuân Nam",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "13:30-15:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-25",
+   "ma_ktv": "KTV02",
+   "ho_ten": "Bùi Xuân Nam",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "15:30-17:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-25",
+   "ma_ktv": "KTV02",
+   "ho_ten": "Bùi Xuân Nam",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "19:00-21:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-25",
+   "ma_ktv": "KTV03",
+   "ho_ten": "Hoàng Anh Tuấn",
+   "chuyen_mon": "dieu_hoa",
+   "khung_gio": "08:00-10:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-25",
+   "ma_ktv": "KTV03",
+   "ho_ten": "Hoàng Anh Tuấn",
+   "chuyen_mon": "dieu_hoa",
+   "khung_gio": "10:00-12:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-25",
+   "ma_ktv": "KTV03",
+   "ho_ten": "Hoàng Anh Tuấn",
+   "chuyen_mon": "dieu_hoa",
+   "khung_gio": "13:30-15:30",
+   "trang_thai": "da_dat"
+  },
+  {
+   "ngay": "2026-09-25",
+   "ma_ktv": "KTV03",
+   "ho_ten": "Hoàng Anh Tuấn",
+   "chuyen_mon": "dieu_hoa",
+   "khung_gio": "15:30-17:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-25",
+   "ma_ktv": "KTV03",
+   "ho_ten": "Hoàng Anh Tuấn",
+   "chuyen_mon": "dieu_hoa",
+   "khung_gio": "19:00-21:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-25",
+   "ma_ktv": "KTV04",
+   "ho_ten": "Ngô Thị Hà",
+   "chuyen_mon": "thang_may",
+   "khung_gio": "08:00-10:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-25",
+   "ma_ktv": "KTV04",
+   "ho_ten": "Ngô Thị Hà",
+   "chuyen_mon": "thang_may",
+   "khung_gio": "10:00-12:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-25",
+   "ma_ktv": "KTV04",
+   "ho_ten": "Ngô Thị Hà",
+   "chuyen_mon": "thang_may",
+   "khung_gio": "13:30-15:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-25",
+   "ma_ktv": "KTV04",
+   "ho_ten": "Ngô Thị Hà",
+   "chuyen_mon": "thang_may",
+   "khung_gio": "15:30-17:30",
+   "trang_thai": "da_dat"
+  },
+  {
+   "ngay": "2026-09-25",
+   "ma_ktv": "KTV04",
+   "ho_ten": "Ngô Thị Hà",
+   "chuyen_mon": "thang_may",
+   "khung_gio": "19:00-21:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-25",
+   "ma_ktv": "KTV05",
+   "ho_ten": "Lý Trọng Nghĩa",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "08:00-10:00",
+   "trang_thai": "da_dat"
+  },
+  {
+   "ngay": "2026-09-25",
+   "ma_ktv": "KTV05",
+   "ho_ten": "Lý Trọng Nghĩa",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "10:00-12:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-25",
+   "ma_ktv": "KTV05",
+   "ho_ten": "Lý Trọng Nghĩa",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "13:30-15:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-25",
+   "ma_ktv": "KTV05",
+   "ho_ten": "Lý Trọng Nghĩa",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "15:30-17:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-25",
+   "ma_ktv": "KTV05",
+   "ho_ten": "Lý Trọng Nghĩa",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "19:00-21:00",
+   "trang_thai": "da_dat"
+  },
+  {
+   "ngay": "2026-09-26",
+   "ma_ktv": "KTV01",
+   "ho_ten": "Đỗ Văn Thành",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "08:00-10:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-26",
+   "ma_ktv": "KTV01",
+   "ho_ten": "Đỗ Văn Thành",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "10:00-12:00",
+   "trang_thai": "da_dat"
+  },
+  {
+   "ngay": "2026-09-26",
+   "ma_ktv": "KTV01",
+   "ho_ten": "Đỗ Văn Thành",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "13:30-15:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-26",
+   "ma_ktv": "KTV01",
+   "ho_ten": "Đỗ Văn Thành",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "15:30-17:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-26",
+   "ma_ktv": "KTV01",
+   "ho_ten": "Đỗ Văn Thành",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "19:00-21:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-26",
+   "ma_ktv": "KTV02",
+   "ho_ten": "Bùi Xuân Nam",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "08:00-10:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-26",
+   "ma_ktv": "KTV02",
+   "ho_ten": "Bùi Xuân Nam",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "10:00-12:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-26",
+   "ma_ktv": "KTV02",
+   "ho_ten": "Bùi Xuân Nam",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "13:30-15:30",
+   "trang_thai": "da_dat"
+  },
+  {
+   "ngay": "2026-09-26",
+   "ma_ktv": "KTV02",
+   "ho_ten": "Bùi Xuân Nam",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "15:30-17:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-26",
+   "ma_ktv": "KTV02",
+   "ho_ten": "Bùi Xuân Nam",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "19:00-21:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-26",
+   "ma_ktv": "KTV03",
+   "ho_ten": "Hoàng Anh Tuấn",
+   "chuyen_mon": "dieu_hoa",
+   "khung_gio": "08:00-10:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-26",
+   "ma_ktv": "KTV03",
+   "ho_ten": "Hoàng Anh Tuấn",
+   "chuyen_mon": "dieu_hoa",
+   "khung_gio": "10:00-12:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-26",
+   "ma_ktv": "KTV03",
+   "ho_ten": "Hoàng Anh Tuấn",
+   "chuyen_mon": "dieu_hoa",
+   "khung_gio": "13:30-15:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-26",
+   "ma_ktv": "KTV03",
+   "ho_ten": "Hoàng Anh Tuấn",
+   "chuyen_mon": "dieu_hoa",
+   "khung_gio": "15:30-17:30",
+   "trang_thai": "da_dat"
+  },
+  {
+   "ngay": "2026-09-26",
+   "ma_ktv": "KTV03",
+   "ho_ten": "Hoàng Anh Tuấn",
+   "chuyen_mon": "dieu_hoa",
+   "khung_gio": "19:00-21:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-26",
+   "ma_ktv": "KTV04",
+   "ho_ten": "Ngô Thị Hà",
+   "chuyen_mon": "thang_may",
+   "khung_gio": "08:00-10:00",
+   "trang_thai": "da_dat"
+  },
+  {
+   "ngay": "2026-09-26",
+   "ma_ktv": "KTV04",
+   "ho_ten": "Ngô Thị Hà",
+   "chuyen_mon": "thang_may",
+   "khung_gio": "10:00-12:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-26",
+   "ma_ktv": "KTV04",
+   "ho_ten": "Ngô Thị Hà",
+   "chuyen_mon": "thang_may",
+   "khung_gio": "13:30-15:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-26",
+   "ma_ktv": "KTV04",
+   "ho_ten": "Ngô Thị Hà",
+   "chuyen_mon": "thang_may",
+   "khung_gio": "15:30-17:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-26",
+   "ma_ktv": "KTV04",
+   "ho_ten": "Ngô Thị Hà",
+   "chuyen_mon": "thang_may",
+   "khung_gio": "19:00-21:00",
+   "trang_thai": "da_dat"
+  },
+  {
+   "ngay": "2026-09-26",
+   "ma_ktv": "KTV05",
+   "ho_ten": "Lý Trọng Nghĩa",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "08:00-10:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-26",
+   "ma_ktv": "KTV05",
+   "ho_ten": "Lý Trọng Nghĩa",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "10:00-12:00",
+   "trang_thai": "da_dat"
+  },
+  {
+   "ngay": "2026-09-26",
+   "ma_ktv": "KTV05",
+   "ho_ten": "Lý Trọng Nghĩa",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "13:30-15:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-26",
+   "ma_ktv": "KTV05",
+   "ho_ten": "Lý Trọng Nghĩa",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "15:30-17:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-26",
+   "ma_ktv": "KTV05",
+   "ho_ten": "Lý Trọng Nghĩa",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "19:00-21:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-27",
+   "ma_ktv": "KTV01",
+   "ho_ten": "Đỗ Văn Thành",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "08:00-10:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-27",
+   "ma_ktv": "KTV01",
+   "ho_ten": "Đỗ Văn Thành",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "10:00-12:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-27",
+   "ma_ktv": "KTV01",
+   "ho_ten": "Đỗ Văn Thành",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "13:30-15:30",
+   "trang_thai": "da_dat"
+  },
+  {
+   "ngay": "2026-09-27",
+   "ma_ktv": "KTV01",
+   "ho_ten": "Đỗ Văn Thành",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "15:30-17:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-27",
+   "ma_ktv": "KTV01",
+   "ho_ten": "Đỗ Văn Thành",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "19:00-21:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-27",
+   "ma_ktv": "KTV02",
+   "ho_ten": "Bùi Xuân Nam",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "08:00-10:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-27",
+   "ma_ktv": "KTV02",
+   "ho_ten": "Bùi Xuân Nam",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "10:00-12:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-27",
+   "ma_ktv": "KTV02",
+   "ho_ten": "Bùi Xuân Nam",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "13:30-15:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-27",
+   "ma_ktv": "KTV02",
+   "ho_ten": "Bùi Xuân Nam",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "15:30-17:30",
+   "trang_thai": "da_dat"
+  },
+  {
+   "ngay": "2026-09-27",
+   "ma_ktv": "KTV02",
+   "ho_ten": "Bùi Xuân Nam",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "19:00-21:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-27",
+   "ma_ktv": "KTV03",
+   "ho_ten": "Hoàng Anh Tuấn",
+   "chuyen_mon": "dieu_hoa",
+   "khung_gio": "08:00-10:00",
+   "trang_thai": "da_dat"
+  },
+  {
+   "ngay": "2026-09-27",
+   "ma_ktv": "KTV03",
+   "ho_ten": "Hoàng Anh Tuấn",
+   "chuyen_mon": "dieu_hoa",
+   "khung_gio": "10:00-12:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-27",
+   "ma_ktv": "KTV03",
+   "ho_ten": "Hoàng Anh Tuấn",
+   "chuyen_mon": "dieu_hoa",
+   "khung_gio": "13:30-15:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-27",
+   "ma_ktv": "KTV03",
+   "ho_ten": "Hoàng Anh Tuấn",
+   "chuyen_mon": "dieu_hoa",
+   "khung_gio": "15:30-17:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-27",
+   "ma_ktv": "KTV03",
+   "ho_ten": "Hoàng Anh Tuấn",
+   "chuyen_mon": "dieu_hoa",
+   "khung_gio": "19:00-21:00",
+   "trang_thai": "da_dat"
+  },
+  {
+   "ngay": "2026-09-27",
+   "ma_ktv": "KTV04",
+   "ho_ten": "Ngô Thị Hà",
+   "chuyen_mon": "thang_may",
+   "khung_gio": "08:00-10:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-27",
+   "ma_ktv": "KTV04",
+   "ho_ten": "Ngô Thị Hà",
+   "chuyen_mon": "thang_may",
+   "khung_gio": "10:00-12:00",
+   "trang_thai": "da_dat"
+  },
+  {
+   "ngay": "2026-09-27",
+   "ma_ktv": "KTV04",
+   "ho_ten": "Ngô Thị Hà",
+   "chuyen_mon": "thang_may",
+   "khung_gio": "13:30-15:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-27",
+   "ma_ktv": "KTV04",
+   "ho_ten": "Ngô Thị Hà",
+   "chuyen_mon": "thang_may",
+   "khung_gio": "15:30-17:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-27",
+   "ma_ktv": "KTV04",
+   "ho_ten": "Ngô Thị Hà",
+   "chuyen_mon": "thang_may",
+   "khung_gio": "19:00-21:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-27",
+   "ma_ktv": "KTV05",
+   "ho_ten": "Lý Trọng Nghĩa",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "08:00-10:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-27",
+   "ma_ktv": "KTV05",
+   "ho_ten": "Lý Trọng Nghĩa",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "10:00-12:00",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-27",
+   "ma_ktv": "KTV05",
+   "ho_ten": "Lý Trọng Nghĩa",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "13:30-15:30",
+   "trang_thai": "da_dat"
+  },
+  {
+   "ngay": "2026-09-27",
+   "ma_ktv": "KTV05",
+   "ho_ten": "Lý Trọng Nghĩa",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "15:30-17:30",
+   "trang_thai": "trong"
+  },
+  {
+   "ngay": "2026-09-27",
+   "ma_ktv": "KTV05",
+   "ho_ten": "Lý Trọng Nghĩa",
+   "chuyen_mon": "dien_nuoc",
+   "khung_gio": "19:00-21:00",
+   "trang_thai": "trong"
+  }
+ ]
+}

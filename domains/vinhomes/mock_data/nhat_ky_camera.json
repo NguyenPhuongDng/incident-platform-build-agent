@@ -1,0 +1,122 @@
+[
+ {
+  "ngay": "2026-09-21",
+  "khu_vuc": "Hầm xe B1",
+  "ma_camera": "CAM-B1-01",
+  "thoi_diem": "07:00",
+  "su_kien": "Người lạ không đeo thẻ cư dân đi vào",
+  "trang_thai_ghi_hinh": "day_du"
+ },
+ {
+  "ngay": "2026-09-21",
+  "khu_vuc": "Hầm xe B1",
+  "ma_camera": "CAM-B1-04",
+  "thoi_diem": "12:23",
+  "su_kien": "Ghi nhận bình thường",
+  "trang_thai_ghi_hinh": "day_du"
+ },
+ {
+  "ngay": "2026-09-21",
+  "khu_vuc": "Sảnh S1",
+  "ma_camera": "CAM-S1-LOBBY",
+  "thoi_diem": "07:00",
+  "su_kien": "Người lạ không đeo thẻ cư dân đi vào",
+  "trang_thai_ghi_hinh": "day_du"
+ },
+ {
+  "ngay": "2026-09-21",
+  "khu_vuc": "Hành lang S1 tầng 12",
+  "ma_camera": "CAM-S1-12",
+  "thoi_diem": "07:00",
+  "su_kien": "Người lạ không đeo thẻ cư dân đi vào",
+  "trang_thai_ghi_hinh": "day_du"
+ },
+ {
+  "ngay": "2026-09-21",
+  "khu_vuc": "Khu thu gom rác S1",
+  "ma_camera": "CAM-S1-RAC",
+  "thoi_diem": "07:00",
+  "su_kien": "Người lạ không đeo thẻ cư dân đi vào",
+  "trang_thai_ghi_hinh": "day_du"
+ },
+ {
+  "ngay": "2026-09-20",
+  "khu_vuc": "Hầm xe B1",
+  "ma_camera": "CAM-B1-01",
+  "thoi_diem": "10:17",
+  "su_kien": "Phương tiện ra vào",
+  "trang_thai_ghi_hinh": "day_du"
+ },
+ {
+  "ngay": "2026-09-20",
+  "khu_vuc": "Hầm xe B1",
+  "ma_camera": "CAM-B1-04",
+  "thoi_diem": "15:40",
+  "su_kien": "Vật cản để ngoài hành lang",
+  "trang_thai_ghi_hinh": "day_du"
+ },
+ {
+  "ngay": "2026-09-20",
+  "khu_vuc": "Sảnh S1",
+  "ma_camera": "CAM-S1-LOBBY",
+  "thoi_diem": "10:17",
+  "su_kien": "Phương tiện ra vào",
+  "trang_thai_ghi_hinh": "day_du"
+ },
+ {
+  "ngay": "2026-09-20",
+  "khu_vuc": "Hành lang S1 tầng 12",
+  "ma_camera": "CAM-S1-12",
+  "thoi_diem": "10:17",
+  "su_kien": "Phương tiện ra vào",
+  "trang_thai_ghi_hinh": "day_du"
+ },
+ {
+  "ngay": "2026-09-20",
+  "khu_vuc": "Khu thu gom rác S1",
+  "ma_camera": "CAM-S1-RAC",
+  "thoi_diem": "10:17",
+  "su_kien": "Phương tiện ra vào",
+  "trang_thai_ghi_hinh": "day_du"
+ },
+ {
+  "ngay": "2026-09-19",
+  "khu_vuc": "Hầm xe B1",
+  "ma_camera": "CAM-B1-01",
+  "thoi_diem": "13:34",
+  "su_kien": "Người lạ không đeo thẻ cư dân đi vào",
+  "trang_thai_ghi_hinh": "day_du"
+ },
+ {
+  "ngay": "2026-09-19",
+  "khu_vuc": "Hầm xe B1",
+  "ma_camera": "CAM-B1-04",
+  "thoi_diem": "18:57",
+  "su_kien": "Ghi nhận bình thường",
+  "trang_thai_ghi_hinh": "day_du"
+ },
+ {
+  "ngay": "2026-09-19",
+  "khu_vuc": "Sảnh S1",
+  "ma_camera": "CAM-S1-LOBBY",
+  "thoi_diem": "13:34",
+  "su_kien": "Người lạ không đeo thẻ cư dân đi vào",
+  "trang_thai_ghi_hinh": "day_du"
+ },
+ {
+  "ngay": "2026-09-19",
+  "khu_vuc": "Hành lang S1 tầng 12",
+  "ma_camera": "CAM-S1-12",
+  "thoi_diem": "13:34",
+  "su_kien": "Người lạ không đeo thẻ cư dân đi vào",
+  "trang_thai_ghi_hinh": "day_du"
+ },
+ {
+  "ngay": "2026-09-19",
+  "khu_vuc": "Khu thu gom rác S1",
+  "ma_camera": "CAM-S1-RAC",
+  "thoi_diem": "13:34",
+  "su_kien": "Người lạ không đeo thẻ cư dân đi vào",
+  "trang_thai_ghi_hinh": "day_du"
+ }
+]

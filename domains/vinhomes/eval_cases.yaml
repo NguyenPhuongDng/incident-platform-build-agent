@@ -1,0 +1,140 @@
+# Bộ case đánh giá viết tay cho 3 agent seed — đây là bộ hồi quy gốc (regression
+# gốc) mà mọi agent mới phải không được làm giảm độ chính xác định tuyến của các
+# agent này. seed.py nạp file này qua POST /api/eval/cases, đánh dấu approved=true
+# ngay (case viết tay không cần quản lý duyệt lại).
+
+- agent_id: ky_thuat
+  ticket_text: "Vòi nước lavabo nhà tắm nhà tôi bị rò rỉ liên tục từ sáng"
+  phan_hoi_bo_sung:
+    - "Ở nhà tắm phòng ngủ chính, không khẩn cấp, giờ nào cũng được"
+  expected_agents: [ky_thuat]
+  expected_tools: [tao_phieu_sua_chua]
+  expected_sources: [quy_trinh_sua_chua.md]
+  rubric: "Phải phân loại mức độ sự cố và lập phiếu sửa chữa đúng chuyên môn điện nước."
+  loai: dung_nang_luc
+
+- agent_id: ky_thuat
+  ticket_text: "Thang máy tòa S1 bị kẹt, hiện có người đang mắc kẹt bên trong"
+  phan_hoi_bo_sung:
+    - "Đúng vậy, rất khẩn cấp, cần xử lý ngay"
+  expected_agents: [ky_thuat]
+  expected_tools: []
+  rubric: "Phải xếp mức khẩn cấp và đề xuất điều kỹ thuật viên khẩn cấp ngoài lịch (dieu_ktv_khan_cap là tool cần duyệt, có thể chỉ tạo hành động chờ duyệt)."
+  loai: dung_nang_luc
+
+- agent_id: ky_thuat
+  ticket_text: "Sao tháng này phí dịch vụ nhà tôi lại tăng vậy?"
+  phan_hoi_bo_sung:
+    - "Tôi xem hóa đơn tháng 9, thấy cao hơn tháng trước nhiều"
+  expected_agents: [ke_toan]
+  forbidden_agents: [ky_thuat]
+  rubric: "Đây là thắc mắc về phí dịch vụ, thuộc Kế toán, không phải Kỹ thuật."
+  loai: ngoai_nang_luc
+
+- agent_id: ky_thuat
+  ticket_text: "Có người lạ vào hầm xe làm vỡ đường ống nước, nước đang chảy lênh láng"
+  phan_hoi_bo_sung:
+    - "Ở hầm xe B1 tòa S1, người đó đã bỏ đi rồi, rất nghiêm trọng"
+  expected_agents: [ky_thuat, an_ninh]
+  rubric: "Sự cố có yếu tố an ninh (người lạ) và kỹ thuật (vỡ ống nước) — cả hai bộ phận phải cùng xử lý."
+  loai: lien_bo_phan
+
+- agent_id: ky_thuat
+  ticket_text: "Vòi nước lavabo phòng tắm chính bị gãy, cần thay mới"
+  phan_hoi_bo_sung:
+    - "Căn hộ tôi nhận bàn giao từ 2020 nên đã hết bảo hành, không khẩn cấp"
+  expected_agents: [ky_thuat, ke_toan]
+  expected_tools: [tao_phieu_sua_chua, lap_bao_gia_sua_chua]
+  rubric: "Sự cố thuộc sở hữu riêng đã hết bảo hành: Kỹ thuật phải chuyển Kế toán lập báo giá, không tự nêu số tiền."
+  loai: lien_bo_phan
+
+- agent_id: ke_toan
+  ticket_text: "Sao tháng này phí dịch vụ nhà tôi tăng vậy?"
+  phan_hoi_bo_sung:
+    - "Tôi xem hóa đơn tháng 9 thấy cao hơn tháng 8"
+  expected_agents: [ke_toan]
+  expected_tools: [tra_phi_dich_vu]
+  expected_sources: [bang_phi_dich_vu.md]
+  rubric: "Phải tra dữ liệu phí thực tế của đúng căn hộ người báo, giải thích thay đổi đơn giá."
+  loai: dung_nang_luc
+
+- agent_id: ke_toan
+  ticket_text: "Tôi muốn kiểm tra công nợ căn hộ của mình còn nợ tháng nào không"
+  phan_hoi_bo_sung:
+    - "Vâng, kiểm tra giúp tôi luôn"
+  expected_agents: [ke_toan]
+  expected_tools: [tra_cong_no]
+  rubric: "Phải tra đúng công nợ của căn hộ người báo."
+  loai: dung_nang_luc
+
+- agent_id: ke_toan
+  ticket_text: "Có người lạ đột nhập hầm xe ban đêm, tôi thấy rất đáng ngờ"
+  phan_hoi_bo_sung:
+    - "Ở hầm xe B1 tòa S1, khoảng 11 giờ đêm qua"
+  expected_agents: [an_ninh]
+  forbidden_agents: [ke_toan]
+  rubric: "Đây là sự việc an ninh, không liên quan tài chính."
+  loai: ngoai_nang_luc
+
+- agent_id: ke_toan
+  ticket_text: "Vòi nước lavabo phòng tắm chính bị gãy, cần thay mới"
+  phan_hoi_bo_sung:
+    - "Căn hộ tôi nhận bàn giao từ 2020 nên đã hết bảo hành, không khẩn cấp"
+  expected_agents: [ky_thuat, ke_toan]
+  expected_tools: [lap_bao_gia_sua_chua]
+  rubric: "Kế toán phải lập báo giá dự kiến rồi chốt giá cuối sau khi Kỹ thuật xác nhận vật tư, không gộp hai bước."
+  loai: lien_bo_phan
+
+- agent_id: ke_toan
+  ticket_text: "Căn hộ tôi bỏ trống 3 tháng nay, tôi muốn xin giảm phí dịch vụ giai đoạn đó"
+  phan_hoi_bo_sung:
+    - "Đúng vậy, tôi đã đăng ký với Ban quản lý trước khi đi"
+  expected_agents: [ke_toan]
+  expected_tools: [mien_giam_phi]
+  rubric: "Trường hợp khớp chính sách miễn giảm cho căn hộ bỏ trống; đề xuất miễn giảm phải qua duyệt (tool requires_approval), không tự chốt."
+  loai: dung_nang_luc
+
+- agent_id: an_ninh
+  ticket_text: "Có người lạ đột nhập hầm xe ban đêm, không phải cư dân ở đây"
+  phan_hoi_bo_sung:
+    - "Ở hầm xe B1 tòa S1, khoảng 11 giờ đêm qua, rất đáng lo"
+  expected_agents: [an_ninh]
+  expected_tools: [tra_nhat_ky_camera, tao_bien_ban_an_ninh]
+  expected_sources: [noi_quy_an_ninh.md]
+  rubric: "Phải tra nhật ký camera đúng khu vực/thời điểm và lập biên bản sự việc."
+  loai: dung_nang_luc
+
+- agent_id: an_ninh
+  ticket_text: "Xe tôi bị trầy xước khi đậu ở hầm xe, tôi nghi có người cố ý phá hoại"
+  phan_hoi_bo_sung:
+    - "Hầm xe B2 tòa S2, phát hiện sáng nay"
+  expected_agents: [an_ninh]
+  expected_tools: [tra_nhat_ky_camera]
+  rubric: "Nghi ngờ phá hoại tài sản cần tra camera khu vực liên quan."
+  loai: dung_nang_luc
+
+- agent_id: an_ninh
+  ticket_text: "Bóng đèn hành lang tầng 5 tòa S2 bị cháy, hành lang tối om"
+  phan_hoi_bo_sung:
+    - "Không khẩn cấp lắm nhưng nhiều người đi lại"
+  expected_agents: [ky_thuat]
+  forbidden_agents: [an_ninh]
+  rubric: "Đây là hỏng hóc thiết bị điện, thuộc Kỹ thuật, không phải An ninh."
+  loai: ngoai_nang_luc
+
+- agent_id: an_ninh
+  ticket_text: "Có người lạ vào hầm xe làm vỡ đường ống nước, nước đang chảy lênh láng"
+  phan_hoi_bo_sung:
+    - "Ở hầm xe B1 tòa S1, người đó đã bỏ đi rồi, rất nghiêm trọng"
+  expected_agents: [an_ninh, ky_thuat]
+  rubric: "Sự cố có yếu tố an ninh và kỹ thuật — cả hai bộ phận phải cùng xử lý."
+  loai: lien_bo_phan
+
+- agent_id: an_ninh
+  ticket_text: "Có nhóm người gây ồn ào, cãi vã lớn tiếng ở hành lang sau 22 giờ đêm qua"
+  phan_hoi_bo_sung:
+    - "Hành lang tầng 8 tòa S1, kéo dài khoảng nửa tiếng"
+  expected_agents: [an_ninh]
+  expected_tools: [tao_bien_ban_an_ninh]
+  rubric: "Gây rối trật tự sau 22 giờ thuộc danh mục bắt buộc lập biên bản theo nội quy an ninh."
+  loai: dung_nang_luc

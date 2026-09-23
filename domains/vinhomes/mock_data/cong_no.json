@@ -1,0 +1,112 @@
+[
+ {
+  "ma_can_ho": "S1-1203",
+  "du_no": 0,
+  "han_thanh_toan": null,
+  "chi_tiet": [
+   {
+    "thang": "2026-07",
+    "so_tien": 2995250,
+    "trang_thai": "da_thanh_toan"
+   },
+   {
+    "thang": "2026-08",
+    "so_tien": 3010250,
+    "trang_thai": "da_thanh_toan"
+   },
+   {
+    "thang": "2026-09",
+    "so_tien": 3143000,
+    "trang_thai": "da_thanh_toan"
+   }
+  ]
+ },
+ {
+  "ma_can_ho": "S2-0805",
+  "du_no": 1462000,
+  "han_thanh_toan": "2026-09-30",
+  "chi_tiet": [
+   {
+    "thang": "2026-07",
+    "so_tien": 1351000,
+    "trang_thai": "da_thanh_toan"
+   },
+   {
+    "thang": "2026-08",
+    "so_tien": 1366000,
+    "trang_thai": "da_thanh_toan"
+   },
+   {
+    "thang": "2026-09",
+    "so_tien": 1462000,
+    "trang_thai": "chua_thanh_toan"
+   }
+  ]
+ },
+ {
+  "ma_can_ho": "S1-1805",
+  "du_no": 0,
+  "han_thanh_toan": null,
+  "chi_tiet": [
+   {
+    "thang": "2026-07",
+    "so_tien": 3547950,
+    "trang_thai": "da_thanh_toan"
+   },
+   {
+    "thang": "2026-08",
+    "so_tien": 3562950,
+    "trang_thai": "da_thanh_toan"
+   },
+   {
+    "thang": "2026-09",
+    "so_tien": 3731400,
+    "trang_thai": "da_thanh_toan"
+   }
+  ]
+ },
+ {
+  "ma_can_ho": "S3-0402",
+  "du_no": 1598000,
+  "han_thanh_toan": "2026-09-30",
+  "chi_tiet": [
+   {
+    "thang": "2026-07",
+    "so_tien": 1469000,
+    "trang_thai": "da_thanh_toan"
+   },
+   {
+    "thang": "2026-08",
+    "so_tien": 1484000,
+    "trang_thai": "da_thanh_toan"
+   },
+   {
+    "thang": "2026-09",
+    "so_tien": 1598000,
+    "trang_thai": "chua_thanh_toan"
+   }
+  ]
+ },
+ {
+  "ma_can_ho": "S2-1501",
+  "du_no": 0,
+  "han_thanh_toan": null,
+  "chi_tiet": [
+   {
+    "thang": "2026-07",
+    "so_tien": 3152000,
+    "trang_thai": "da_thanh_toan"
+   },
+   {
+    "thang": "2026-08",
+    "so_tien": 3167000,
+    "trang_thai": "da_thanh_toan"
+   },
+   {
+    "thang": "2026-09",
+    "so_tien": 3314000,
+    "trang_thai": "da_thanh_toan"
+   }
+  ]
+ }
+]

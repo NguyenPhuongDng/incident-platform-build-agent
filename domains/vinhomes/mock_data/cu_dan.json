@@ -1,0 +1,7 @@
+[
+  {"ma_cu_dan": "CD001", "ho_ten": "Nguyễn Thị Lan", "ma_can_ho": "S1-1203", "dien_thoai": "0912345001", "email": "lan.nt@example.com", "ngay_vao_o": "2021-03-15", "vai_tro": "Chủ hộ"},
+  {"ma_cu_dan": "CD002", "ho_ten": "Trần Văn Hùng", "ma_can_ho": "S2-0805", "dien_thoai": "0912345002", "email": "hung.tv@example.com", "ngay_vao_o": "2022-07-01", "vai_tro": "Chủ hộ"},
+  {"ma_cu_dan": "CD003", "ho_ten": "Lê Minh Châu", "ma_can_ho": "S1-1805", "dien_thoai": "0912345003", "email": "chau.lm@example.com", "ngay_vao_o": "2020-11-20", "vai_tro": "Chủ hộ"},
+  {"ma_cu_dan": "CD004", "ho_ten": "Phạm Quốc Đạt", "ma_can_ho": "S3-0402", "dien_thoai": "0912345004", "email": "dat.pq@example.com", "ngay_vao_o": "2023-01-09", "vai_tro": "Người thuê"},
+  {"ma_cu_dan": "CD005", "ho_ten": "Vũ Hoàng Yến", "ma_can_ho": "S2-1501", "dien_thoai": "0912345005", "email": "yen.vh@example.com", "ngay_vao_o": "2019-05-30", "vai_tro": "Chủ hộ"}
+]
